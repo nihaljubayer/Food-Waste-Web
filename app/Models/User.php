@@ -39,6 +39,7 @@ class User extends Authenticatable
      * @return array<string, string>
      */
     protected function casts(): array
+    
     {
         return [
             'email_verified_at' => 'datetime',
