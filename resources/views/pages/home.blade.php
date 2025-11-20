@@ -295,7 +295,7 @@
             © {{ date('Y') }} Food Waste Donor Management System. All rights reserved.
         </p>
         <p class="mb-0 small">
-            Contact: <a href="mailto:info@foodwasteproject.com">info@foodwasteproject.com</a>
+            Contact: <a href="mailto:info@foodwastemanagement.com">info@foodwastemanagement.com</a>
         </p>
     </div>
 </footer>
