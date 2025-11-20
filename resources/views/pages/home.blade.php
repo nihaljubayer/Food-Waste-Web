@@ -43,6 +43,7 @@
         margin-top:1rem;
     }
     .hero-buttons .btn{
+        
         padding:.7rem 2.5rem;
         border-radius:999px;
         font-weight:600;
