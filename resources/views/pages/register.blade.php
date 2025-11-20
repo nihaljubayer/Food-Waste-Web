@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login page</title>
+    <title>Document</title>
 </head>
 <body>
-    <h1>Login Page</h1>
-    <p>please make a login to continue</p>
-    <h2> make a longin page<h2>
+    <h2>this is a registration form</h2>
+    <form>
+      name:  <input type="text" placeholder="emter your name">
+    </form>
+
 </body>
 </html>
