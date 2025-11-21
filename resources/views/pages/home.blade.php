@@ -9,7 +9,7 @@
     .hero-section{
         width:100%;
         min-height:90vh;
-        background:url('{{ asset('images/h2.jpg') }}') center center/cover no-repeat;
+        background:url('{{ asset('images/home1.jpg') }}') center center/cover no-repeat;
         position:relative;
         color:#fff;
     }
@@ -43,7 +43,6 @@
         margin-top:1rem;
     }
     .hero-buttons .btn{
-        
         padding:.7rem 2.5rem;
         border-radius:999px;
         font-weight:600;
@@ -89,7 +88,7 @@
     }
 </style>
 
-{{-- ================= HERO SECTION ================= --}}
+
 <section class="hero-section">
     <div class="hero-overlay"></div>
 
@@ -103,9 +102,8 @@
         </p>
 
         <div class="hero-buttons mt-4">
-            <a href="{{ route('signup.choice') }}" class="btn btn-warning btn-lg me-3">SignUp</a>
-            <a href="{{ route('login') }}" class="btn btn-warning btn-lg">SignIn</a>
-
+            <a href="{{ route('signup.choice') }}" class="btn btn-warning text-dark">SignUp</a>
+            <a href="{{ route('login') }}" class="btn btn-outline-light">SignIn</a>
         </div>
 
         <p class="mt-4 mb-0">
@@ -227,8 +225,23 @@
 </section>
 
 {{-- ================= STATS BAND ================= --}}
-<section class="stats-band py-3">
-    
+<section class="stats-band py-4">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h3>100K+</h3>
+                <p class="mb-0">Meals Saved from Waste</p>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h3>250+</h3>
+                <p class="mb-0">Registered Donors</p>
+            </div>
+            <div class="col-md-4">
+                <h3>80+</h3>
+                <p class="mb-0">Partner NGOs & Food Banks</p>
+            </div>
+        </div>
+    </div>
 </section>
 
 {{-- ================= FOR DONORS & ORGS ================= --}}
@@ -295,7 +308,7 @@
             © {{ date('Y') }} Food Waste Donor Management System. All rights reserved.
         </p>
         <p class="mb-0 small">
-            Contact: <a href="mailto:info@foodwastemanagement.com">info@foodwastemanagement.com</a>
+            Contact: <a href="mailto:info@foodwasteproject.com">info@foodwasteproject.com</a>
         </p>
     </div>
 </footer>
