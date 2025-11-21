@@ -74,3 +74,17 @@ class AuthController extends Controller
             'email' => 'Invalid email or password.',
         ]);
     }
+    public function dashboard()
+    {
+        return view('pages.home');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('home');
+    }
+}
