@@ -9,12 +9,52 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
- public function showDonorRegisterForm()
- {
- return view('Auth.register_donor');
- }
+    public function showDonorRegisterForm()
+    {
+        return view('Auth.register_donor');
+    }
 
- public function showOrganizationRegisterForm()
- {
- return view('Auth.register_organization');
- }
+    public function showOrganizationRegisterForm()
+    {
+        return view('Auth.register_organization');
+    }
+    public function showLoginForm()
+    {
+        return view('pages.login');
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name'     => 'required',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+            'role'     => 'required|in:donor,organization',
+        ]);
+
+        $address = $request->address;
+
+        if ($request->role === 'donor') {
+            $addressParts = [
+                $request->district,
+                $request->city,
+                $request->road_no,
+                $request->house_no,
+            ];
+
+            $address = implode(', ', array_filter($addressParts));
+        }
+
+        User::create([
+            'name'              => $request->name,
+            'email'             => $request->email,
+            'password'          => Hash::make($request->password),
+            'role'              => $request->role,
+            'phone'             => $request->phone,
+            'organization_name' => $request->organization_name,
+            'organization_type' => $request->organization_type,
+            'address'           => $address,
+        ]);
+
+        return redirect()->route('login')->with('success', 'Registration successful!');
+    }
