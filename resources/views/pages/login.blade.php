@@ -10,7 +10,9 @@
         padding: 30px;
         background: #ffffff;
         border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+        /* Light Blue Gradient Shadow */
+        box-shadow: 0 4px 20px rgba(0, 120, 255, 0.18);
     }
 
     .auth-title {
@@ -18,12 +20,14 @@
         font-weight: 700;
         text-align: center;
         margin-bottom: 10px;
-        color: #0a4a45;
+
+        /* Light Blue Title */
+        color: #0a3d75;
     }
 
     .auth-subtitle {
         text-align: center;
-        color: #666;
+        color: #4e6e94;
         margin-bottom: 25px;
         font-size: 1rem;
     }
@@ -32,28 +36,34 @@
         font-weight: 600;
         margin-bottom: 6px;
         display: block;
-        color: #333;
+        color: #244a73;
     }
 
     .auth-field input {
         width: 100%;
         padding: 12px;
-        border: 1px solid #bbb;
+        border: 1px solid #9bbde0;
         border-radius: 8px;
         font-size: 1rem;
         outline: none;
         transition: 0.2s;
+
+        /* Light blue input background */
+        background: #f5f9ff;
     }
 
     .auth-field input:focus {
-        border-color: #0a8872;
-        box-shadow: 0 0 4px rgba(10,136,114,0.4);
+        border-color: #5da7ff;
+        box-shadow: 0 0 6px rgba(93, 167, 255, 0.45);
     }
 
     .auth-btn {
         width: 100%;
         padding: 12px;
-        background: #0a8872;
+
+        /* Light gradient blue button */
+        background: linear-gradient(135deg, #57a7ff, #2f80ed);
+
         border: none;
         border-radius: 8px;
         color: #fff;
@@ -61,29 +71,32 @@
         font-weight: 600;
         margin-top: 10px;
         cursor: pointer;
-        transition: 0.2s;
+        transition: 0.25s;
     }
 
     .auth-btn:hover {
-        background: #086f5c;
+        background: linear-gradient(135deg, #2f80ed, #1b63c6);
     }
 
     .auth-bottom {
         text-align: center;
         margin-top: 18px;
         font-size: 1rem;
+        color: #2f4d72;
     }
 
     .auth-bottom a {
-        color: #0a8872;
+        color: #2f80ed;
         font-weight: 600;
         text-decoration: none;
+        transition: 0.2s;
     }
 
     .auth-bottom a:hover {
         text-decoration: underline;
     }
 </style>
+
 
 
 <div class="auth-container">
