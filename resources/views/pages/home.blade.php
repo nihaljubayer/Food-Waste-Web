@@ -102,8 +102,10 @@
         </p>
 
         <div class="hero-buttons mt-4">
-            <a href="{{ route('signup.choice') }}" class="btn btn-warning text-dark">SignUp</a>
-            <a href="{{ route('login') }}" class="btn btn-outline-light">SignIn</a>
+            <a href="{{ route('signup.choice') }}" class="btn btn-warning btn-lg me-3">SignUp</a>
+            <a href="{{ route('login') }}" class="btn btn-warning btn-lg">SignIn</a>
+
+
         </div>
 
         <p class="mt-4 mb-0">

@@ -1,90 +1,115 @@
-{{-- 
-==========================================
-  1. Layout Extend
-==========================================
---}}
 @extends('layouts.main')
 
-@section('title', 'Donor Login')
+@section('title', 'Login')
 
 @section('content')
+<style>
+    .auth-container {
+        max-width: 450px;
+        margin: 60px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .auth-title {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 10px;
+        color: #0a4a45;
+    }
+
+    .auth-subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 25px;
+        font-size: 1rem;
+    }
+
+    .auth-field label {
+        font-weight: 600;
+        margin-bottom: 6px;
+        display: block;
+        color: #333;
+    }
+
+    .auth-field input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #bbb;
+        border-radius: 8px;
+        font-size: 1rem;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    .auth-field input:focus {
+        border-color: #0a8872;
+        box-shadow: 0 0 4px rgba(10,136,114,0.4);
+    }
+
+    .auth-btn {
+        width: 100%;
+        padding: 12px;
+        background: #0a8872;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-top: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .auth-btn:hover {
+        background: #086f5c;
+    }
+
+    .auth-bottom {
+        text-align: center;
+        margin-top: 18px;
+        font-size: 1rem;
+    }
+
+    .auth-bottom a {
+        color: #0a8872;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .auth-bottom a:hover {
+        text-decoration: underline;
+    }
+</style>
 
 
-{{-- 
-==========================================
-  3. Page Structure 
-==========================================
---}}
+<div class="auth-container">
 
-<section class="donor-login-page">
+    <h2 class="auth-title">Login</h2>
+    <p class="auth-subtitle">Welcome back! Please sign in to continue.</p>
 
-    <div class="donor-login-card">
+    <form method="POST" action="{{ route('login.post') }}">
+        @csrf
 
-        {{-- --------------------------
-            LEFT SIDE (Image + Text)
-        --------------------------- --}}
-        <div class="donor-login-left">
-            <div class="donor-login-overlay">
-                <h2>Donate & Make<br>Someone Feel Great</h2>
-                <p>
-                    Login to continue sharing surplus food 
-                    and help NGOs distribute to the needy.
-                </p>
-            </div>
+        <div class="auth-field">
+            <label for="email">Email</label>
+            <input type="email" name="email" required value="{{ old('email') }}">
         </div>
 
-
-
-        {{-- --------------------------
-            RIGHT SIDE (Login Form)
-        --------------------------- --}}
-        <div class="donor-login-right">
-
-            <h3 class="dl-title">Donor Login</h3>
-            <p class="dl-subtitle">Welcome back! Please sign in.</p>
-
-            {{-- Error Message --}}
-            @if ($errors->any())
-                <div class="dl-alert">
-                    {{ $errors->first() }}
-                </div>
-            @endif
-
-
-            {{-- 
-            ==========================================
-              4. Login FORM
-            ==========================================
-            --}}
-            <form method="POST" action="{{ route('pages.login') }}">
-                @csrf
-
-                {{-- Email --}}
-                <div class="dl-field">
-                    <label for="email">Donor Email</label>
-                    <input type="email" id="email" name="email"
-                           value="{{ old('email') }}" required>
-                </div>
-
-                {{-- Password --}}
-                <div class="dl-field">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-
-                {{-- Submit Button --}}
-                <button type="submit" class="dl-btn">Login</button>
-
-            </form>
-
-            {{-- Bottom Link --}}
-            <p class="dl-bottom-text">
-                New Donor?  
-                <a href="{{ route('register.doner') }}">Create an account</a>
-            </p>
-
+        <div class="auth-field" style="margin-top: 15px;">
+            <label for="password">Password</label>
+            <input type="password" name="password" required>
         </div>
-    </div>
-</section>
 
+        <button class="auth-btn">Login</button>
+    </form>
+
+    <p class="auth-bottom">
+        New here? <a href="{{ route('register.donor') }}">Create an account</a>
+    </p>
+
+</div>
 @endsection

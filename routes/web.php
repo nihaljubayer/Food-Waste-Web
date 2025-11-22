@@ -3,32 +3,37 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
-// Home page
+// ---------- HOME ----------
 Route::get('/', function () {
     return view('pages.home');
 })->name('home');
 
-// Signup Choice Page
+// ---------- SIGNUP CHOICE ----------
 Route::get('/signup', function () {
-    return view('pages.register');   // যেখানে donor/organization choose page আছে
+    return view('pages.register');
 })->name('signup.choice');
 
-// Donor Register Form
+// ---------- DONOR REGISTER ----------
 Route::get('/register/donor', [AuthController::class, 'showDonorRegisterForm'])
     ->name('register.donor');
 
-// Organization Register Form
+// ---------- ORGANIZATION REGISTER ----------
 Route::get('/register/organization', [AuthController::class, 'showOrganizationRegisterForm'])
     ->name('register.organization');
 
-// Registration POST
-Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+// ---------- REGISTER POST ----------
+Route::post('/register', [AuthController::class, 'register'])
+    ->name('register.post');
 
-// Login Page
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+// ---------- LOGIN FORM ----------
+Route::get('/login', function () {
+    return view('pages.login');
+})->name('login');
 
-// Login POST
-Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+// ---------- LOGIN POST ----------
+Route::post('/login', [AuthController::class, 'login'])
+    ->name('login.post');
 
-// Dashboard
-Route::get('/dashboard', [AuthController::class, 'dashboard'])->middleware('auth')->name('dashboard');
+// ---------- LOGOUT ----------
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->name('logout');
