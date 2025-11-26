@@ -58,7 +58,7 @@
                                 <input type="email" name="email" class="form-control" required>
                             </div>
 
-                            {{-- Address details --}}
+                        
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">District</label>
                                 <input type="text" name="district" class="form-control">
