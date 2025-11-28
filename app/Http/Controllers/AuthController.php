@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
@@ -19,6 +18,7 @@ class AuthController extends Controller
     {
         return view('Auth.register_organization');
     }
+
     public function showLoginForm()
     {
         return view('pages.login');
@@ -59,6 +59,7 @@ class AuthController extends Controller
 
         return redirect()->route('login')->with('success', 'Registration successful!');
     }
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -75,9 +76,25 @@ class AuthController extends Controller
             'email' => 'Invalid email or password.',
         ]);
     }
+
+    // 🔥 Final role-based dashboard
     public function dashboard()
     {
-        return view('pages.home');
+        $user = Auth::user();
+
+        switch ($user->role) {
+            case 'donor':
+                return redirect()->route('donor.dashboard');
+
+            case 'organization':
+                return redirect()->route('ngo.dashboard');
+
+            case 'admin':
+                return redirect()->route('admin.dashboard');
+
+            default:
+                return redirect()->route('home');
+        }
     }
 
     public function logout(Request $request)
@@ -88,5 +105,4 @@ class AuthController extends Controller
 
         return redirect()->route('home');
     }
-  
 }
