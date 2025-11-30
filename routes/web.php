@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Donor\DashboardController as DonorDashboardController;
+use App\Http\Controllers\Donor\FoodPostController;
+
+
 
 
 Route::get('/', function () {
@@ -39,3 +43,29 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])
         ->name('dashboard');
 });
+
+// ====================== DONOR ROUTES ======================
+Route::middleware('auth')
+    ->prefix('donor')
+    ->name('donor.')
+    ->group(function () {
+
+        // Donor dashboard
+        Route::get('/dashboard', [DonorDashboardController::class, 'index'])
+            ->name('dashboard');
+
+        // Post new food
+        Route::get('/food/create', [FoodPostController::class, 'create'])
+            ->name('food.create');
+
+        Route::post('/food', [FoodPostController::class, 'store'])
+            ->name('food.store');
+
+        // ⭐ My donations list
+        Route::get('/donations', [FoodPostController::class, 'myDonations'])
+            ->name('donations');
+    });
+
+
+
+
