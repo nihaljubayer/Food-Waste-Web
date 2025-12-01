@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Donor\DashboardController as DonorDashboardController;
 use App\Http\Controllers\Donor\FoodPostController;
+use App\Http\Controllers\NgoController;
 
 
 
@@ -65,7 +66,12 @@ Route::middleware('auth')
         Route::get('/donations', [FoodPostController::class, 'myDonations'])
             ->name('donations');
     });
+//NGO
+Route::middleware(['auth'])->group(function () {
+    Route::resource('ngos', NgoController::class);
+});
 
+Route::get('/ngo/dashboard', [NgoController::class, 'index'])->name('ngo.dashboard');
 
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Ngo;                 // 👈 NEW: Ngo model use
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -33,6 +34,7 @@ class AuthController extends Controller
             'role'     => 'required|in:donor,organization',
         ]);
 
+        // ✅ address build
         $address = $request->address;
 
         if ($request->role === 'donor') {
@@ -46,7 +48,8 @@ class AuthController extends Controller
             $address = implode(', ', array_filter($addressParts));
         }
 
-        User::create([
+        // ✅ user create
+        $user = User::create([
             'name'              => $request->name,
             'email'             => $request->email,
             'password'          => Hash::make($request->password),
@@ -57,6 +60,18 @@ class AuthController extends Controller
             'address'           => $address,
         ]);
 
+        // ✅ Jodi organization hole, sathe sathe NGOs table eo entry create
+        if ($user->role === 'organization') {
+            Ngo::create([
+                'name'    => $user->organization_name ?? $user->name,
+                'email'   => $user->email,
+                'phone'   => $user->phone,
+                'address' => $user->address,
+                'status'  => 'pending',   // default status
+            ]);
+        }
+
+        // ekhono tumi login page e pathaccho (iche hole auto-login o korte paro)
         return redirect()->route('login')->with('success', 'Registration successful!');
     }
 
