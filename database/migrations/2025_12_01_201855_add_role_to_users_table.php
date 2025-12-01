@@ -6,13 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // 🔹 role column না থাকলে যোগ করো
             if (!Schema::hasColumn('users', 'role')) {
                 $table->enum('role', ['donor', 'organization', 'admin'])
                       ->default('donor')
@@ -21,9 +17,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {

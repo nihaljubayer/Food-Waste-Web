@@ -114,7 +114,7 @@
     </div>
 </section>
 
-{{-- ================= WHY SECTION ================= --}}
+{{-- ======== WHY SECTION ===========--}}
 <section class="py-5 bg-light">
     <div class="container">
         <div class="row align-items-center gy-4">
@@ -180,7 +180,7 @@
     </div>
 </section>
 
-{{-- ================= HOW IT WORKS ================= --}}
+{{-- ===== HOW IT WORKS ==== --}}
 <section class="py-5">
     <div class="container">
         <h2 class="section-heading text-center mb-4">How the System Works</h2>
@@ -226,12 +226,12 @@
     </div>
 </section>
 
-{{-- ================= STATS BAND ================= --}}
+{{-- ===== STATS BAND ========= --}}
 <section class="stats-band py-3">
   
 </section>
 
-{{-- ================= FOR DONORS & ORGS ================= --}}
+{{-- === FOR DONORS & ORGS ====== --}}
 <section class="py-5 bg-light">
     <div class="container">
         <h2 class="section-heading text-center mb-4">Who Can Join?</h2>
@@ -274,7 +274,7 @@
     </div>
 </section>
 
-{{-- ================= FINAL CALL TO ACTION ================= --}}
+{{-- ======== FINAL CALL TO ACTION ==== --}}
 <section class="py-5">
     <div class="container text-center">
         <h2 class="section-heading mb-3">Ready to share a meal?</h2>

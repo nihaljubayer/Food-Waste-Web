@@ -14,32 +14,31 @@ return new class extends Migration
         Schema::create('food_posts', function (Blueprint $table) {
             $table->id();
 
-            // কোন donor post করছে
+          
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
 
-            // মূল তথ্য
-            $table->string('title');                  // e.g. "Extra Biryani for 20 people"
-            $table->string('category')->nullable();   // e.g. rice, bread, veg, dessert
-            $table->integer('quantity')->nullable();  // e.g. 20
-            $table->string('unit')->nullable();       // e.g. "plates", "packs", "kg"
+            $table->string('title');                  
+            $table->string('category')->nullable();   
+            $table->integer('quantity')->nullable();  
+            $table->string('unit')->nullable();       
 
-            // সময় সম্পর্কিত
-            $table->timestamp('cooked_at')->nullable();      // কখন রান্না হয়েছে (optional)
-            $table->timestamp('expiry_time')->nullable();    // কত সময়ের মধ্যে নিলে ভালো
+            // Time
+            $table->timestamp('cooked_at')->nullable();      
+            $table->timestamp('expiry_time')->nullable();    
             $table->timestamp('pickup_time_from')->nullable();
             $table->timestamp('pickup_time_to')->nullable();
 
-            // লোকেশন (default donor er address use করব, চাইলে আলাদা লিখতে পারবে)
+            
             $table->string('pickup_address')->nullable();
 
-            // বর্ণনা + ছবি
+            
             $table->text('description')->nullable();
             $table->string('image_path')->nullable();        // storage er path
 
-            // AI summary future এর জন্য
+        
             $table->text('ai_summary')->nullable();
 
-            // স্ট্যাটাস – কোন stage এ আছে
+            
             $table->enum('status', ['available', 'reserved', 'completed', 'cancelled'])
                   ->default('available');
 
