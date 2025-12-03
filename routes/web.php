@@ -8,14 +8,14 @@ use App\Http\Controllers\Donor\FoodPostController;
 use App\Http\Controllers\NgoController;
 
 
-
+// ====================== PUBLIC ROUTES ======================
 
 Route::get('/', function () {
     return view('pages.home');
 })->name('home');
 
 Route::get('/signup', function () {
-    return view('pages.register');   // registration choice page
+    return view('pages.register');
 })->name('signup.choice');
 
 Route::get('/register/donor', [AuthController::class, 'showDonorRegisterForm'])
@@ -40,12 +40,21 @@ Route::get('/dashboard', [AuthController::class, 'dashboard'])
     ->middleware('auth')
     ->name('dashboard');
 
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])
-        ->name('dashboard');
-});
+
+// ====================== ADMIN ROUTES ======================
+
+Route::middleware('auth')
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+            ->name('dashboard');
+    });
+
 
 // ====================== DONOR ROUTES ======================
+
 Route::middleware('auth')
     ->prefix('donor')
     ->name('donor.')
@@ -62,16 +71,27 @@ Route::middleware('auth')
         Route::post('/food', [FoodPostController::class, 'store'])
             ->name('food.store');
 
-        // ⭐ My donations list
+        // My donations list
         Route::get('/donations', [FoodPostController::class, 'myDonations'])
             ->name('donations');
+
+
+        // ================== PICKUP MODULE (FRONTEND ONLY) ==================
+        // Your actual view path: resources/views/pages/donor/pickups/create.blade.php
+        Route::view('/pickups/create', 'pages.donor.pickups.create')
+            ->name('pickups.create');
+
+        // Your actual view path: resources/views/pages/donor/pickups/index.blade.php
+        Route::view('/pickups', 'pages.donor.pickups.index')
+            ->name('pickups.index');
     });
-//NGO
+
+
+// ====================== NGO ROUTES ======================
+
 Route::middleware(['auth'])->group(function () {
     Route::resource('ngos', NgoController::class);
 });
 
-Route::get('/ngo/dashboard', [NgoController::class, 'index'])->name('ngo.dashboard');
-
-
-
+Route::get('/ngo/dashboard', [NgoController::class, 'index'])
+    ->name('ngo.dashboard');
