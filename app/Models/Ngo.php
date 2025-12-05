@@ -12,5 +12,8 @@ class Ngo extends Model
         'phone',
         'address',
         'status',
+        'latitude',
+        'longitude',
     ];
+
 }

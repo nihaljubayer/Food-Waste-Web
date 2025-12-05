@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Donor\DashboardController as DonorDashboardController;
 use App\Http\Controllers\Donor\FoodPostController;
 use App\Http\Controllers\NgoController;
+use App\Http\Controllers\NgoOrderController;
 
 
 // ====================== PUBLIC ROUTES ======================
@@ -93,17 +94,34 @@ Route::middleware('auth')
 
 // ====================== NGO ROUTES ======================
 
+
+
 Route::get('/ngo/dashboard', [NgoController::class, 'index'])
     ->name('ngo.dashboard')
     ->middleware('auth');
 
 Route::view('/ngo/profile', 'pages.ngos.profile')
-    ->name('ngo.profile')->middleware('auth');
+    ->name('ngo.profile')
+    ->middleware('auth');
 
-Route::view('/ngo/orders', 'pages.ngos.orders')
-    ->name('ngo.orders')->middleware('auth');
+// Orders (jodi controller diye set kora thake)
+Route::get('/ngo/orders', [\App\Http\Controllers\NgoOrderController::class, 'index'])
+    ->name('ngo.orders')
+    ->middleware('auth');
 
+// Settings page dekhano (GET)
 Route::view('/ngo/settings', 'pages.ngos.settings')
-    ->name('ngo.settings')->middleware('auth');
+    ->name('ngo.settings')
+    ->middleware('auth');
+
+// Settings form submit (POST)  👈 ei line ta NOTUN
+Route::post('/ngo/settings', [NgoController::class, 'updateSettings'])
+    ->name('ngo.settings.update')
+    ->middleware('auth');
+// Update order status (PATCH) 👈 ei line ta NOTUN
+    Route::patch('/ngo/orders/{order}/status', [NgoOrderController::class, 'updateStatus'])
+    ->name('ngo.orders.updateStatus')
+    ->middleware('auth');
+
 
 
