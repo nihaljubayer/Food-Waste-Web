@@ -18,9 +18,7 @@
                         <h3 class="mb-0">
                             Welcome, {{ auth()->user()->organization_name ?? auth()->user()->name }}
                         </h3>
-                        <small class="text-muted">
-                            Here is an overview of your NGO activity.
-                        </small>
+                        <small class="text-muted">Here is an overview of your NGO activity.</small>
                     </div>
 
                     @if(auth()->user()->role === 'admin')

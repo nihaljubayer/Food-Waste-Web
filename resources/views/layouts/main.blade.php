@@ -13,10 +13,10 @@
 
     <style>
         body {
-            background: #f3f4f6;
+            background: #e5d3e1ff;
         }
         .top-navbar {
-            background: linear-gradient(135deg, #0d6efd, #6610f2);
+            background: linear-gradient(135deg, #48c2d2ff, #a180d5ff);
         }
         .top-navbar .navbar-brand {
             font-weight: 700;
@@ -37,7 +37,7 @@
 </head>
 <body>
 
-    {{-- Simple top navbar --}}
+    {{-- Top Navbar --}}
     <nav class="navbar navbar-expand-lg navbar-dark top-navbar shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home') }}">

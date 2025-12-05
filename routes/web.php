@@ -87,16 +87,16 @@ Route::middleware('auth')
     });
 
 
+
+
+
+
 // ====================== NGO ROUTES ======================
 
-
-
-// NGO main dashboard
 Route::get('/ngo/dashboard', [NgoController::class, 'index'])
     ->name('ngo.dashboard')
     ->middleware('auth');
 
-// Ngo profile/orders/settings (just views)
 Route::view('/ngo/profile', 'pages.ngos.profile')
     ->name('ngo.profile')->middleware('auth');
 
@@ -105,4 +105,5 @@ Route::view('/ngo/orders', 'pages.ngos.orders')
 
 Route::view('/ngo/settings', 'pages.ngos.settings')
     ->name('ngo.settings')->middleware('auth');
+
 
