@@ -1,224 +1,226 @@
+{{-- resources/views/pages/home.blade.php --}}
 @extends('layouts.main')
 
-@section('title','Food Donation')
+@section('title', 'Food Waste Platform')
 
 @section('content')
-
 <style>
-    /* ---------- HERO ---------- */
-    .hero-section{
-        width:100%;
-        min-height:90vh;
-        background:url('{{ asset('images/h2.jpg') }}') center center/cover no-repeat;
-        position:relative;
-        color:#fff;
+    .hero-wrapper{
+        min-height: 82vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:3rem 0;
+        background:#f3e6f3;
     }
-    .hero-overlay{
+    .hero-card{
+        max-width:1200px;
+        width:100%;
+        background:#000;
+        color:#fff;
+        border-radius:24px;
+        overflow:hidden;
+        position:relative;
+        box-shadow:0 20px 40px rgba(0,0,0,0.35);
+    }
+    .hero-bg{
         position:absolute;
         inset:0;
-        background:linear-gradient(
-            to bottom,
-            rgba(0,0,0,0.55),
-            rgba(0,0,0,0.75)
-        );
+        background:url('{{ asset('images/h2.jpg') }}') center center/cover no-repeat;
+        filter:brightness(.45);
     }
     .hero-content{
         position:relative;
         z-index:2;
-        min-height:90vh;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content:center;
+        padding:5rem 3rem;
         text-align:center;
-        padding:0 1rem;
+    }
+    @media (min-width: 992px){
+        .hero-content{
+            padding:6rem 5rem;
+        }
     }
     .hero-title{
-        font-size:clamp(2.5rem,5vw,4rem);
+        font-size: clamp(2.4rem, 4.2vw, 3.8rem);
         font-weight:800;
+        margin-bottom:1rem;
     }
     .hero-subtitle{
-        max-width:720px;
         font-size:1.05rem;
-        margin-top:1rem;
+        max-width:720px;
+        margin:0 auto 2.2rem;
     }
     .hero-buttons .btn{
-        padding:.7rem 2.5rem;
+        padding:.8rem 2.5rem;
         border-radius:999px;
         font-weight:600;
         margin:0 .4rem;
+        min-width:150px;
     }
 
-    /* ---------- GENERIC ---------- */
+    /* section generic */
     .section-heading{
         font-weight:700;
     }
     .icon-circle{
-        width:52px;
-        height:52px;
+        width:44px;
+        height:44px;
         border-radius:50%;
         display:flex;
         align-items:center;
         justify-content:center;
-        font-size:1.5rem;
-        background:#f3f4f6;
+        font-size:1.2rem;
+        background:#e6f4ea;
         color:#198754;
     }
 
-    /* ---------- STATS BAND ---------- */
+    /* stats band */
     .stats-band{
-        background:#0f766e;
+        background:linear-gradient(90deg,#0f766e,#0ea5e9);
         color:#fff;
     }
-    .stats-band h3{
+    .stats-number{
+        font-size:1.8rem;
         font-weight:700;
     }
+    .stats-label{
+        text-transform:uppercase;
+        letter-spacing:.08em;
+        font-size:.78rem;
+        opacity:.9;
+    }
 
-    /* ---------- FOOTER ---------- */
-    footer{
-        background:#0f172a;
-        color:#cbd5f5;
+    /* contact */
+    .contact-card{
+        max-width:700px;
+        margin:0 auto;
+        background:#fff;
+        border-radius:12px;
+        padding:24px 28px;
+        box-shadow:0 10px 25px rgba(15,23,42,0.12);
     }
-    footer a{
-        color:#e5e7eb;
-        text-decoration:none;
+
+      /* NAVBAR DESIGN */
+    .custom-navbar {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(10px);
+        border-bottom: 2px solid #f5dfff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        padding: 14px 0;
     }
-    footer a:hover{
-        text-decoration:underline;
+
+    .navbar-brand {
+        font-size: 1.45rem;
+        font-weight: 800;
+        color: #3a0066 !important;
+        letter-spacing: .5px;
+    }
+
+    /* NAV LINKS */
+    .nav-link {
+        font-weight: 600;
+        color: #4a006e !important;
+        font-size: 1rem;
+        padding: 8px 14px !important;
+        border-radius: 6px;
+        transition: all .25s ease;
+    }
+
+    /* Hover effect (No underline, soft highlight) */
+    .nav-link:hover {
+        background: #f3d9ff;
+        color: #6a0099 !important;
+    }
+
+    /* Active Page Highlight */
+    .nav-link.active {
+        background: #e6c4ff;
+        color: #4a006e !important;
+        font-weight: 700;
+    }
+
+    /* USER ROLE BADGE */
+    .user-role-badge {
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 700;
+        background: #00a86b;
+        color: #fff;
     }
 </style>
 
-{{-- ================= HERO SECTION ================= --}}
-<section class="hero-section">
-    <div class="hero-overlay"></div>
+{{-- ============ HERO ============ --}}
+<section class="hero-wrapper">
+    <div class="hero-card">
+        <div class="hero-bg"></div>
 
-    <div class="hero-content">
-        <h1 class="hero-title">A meal shared is a smile shared</h1>
+        <div class="hero-content">
+            <h1 class="hero-title">A meal shared is a smile shared</h1>
 
-        <p class="hero-subtitle">
-            Welcome to Food Donation, where we bridge the gap between abundance and need
-            by connecting surplus food from homes, restaurants and events
-            to nearby NGOs and volunteers.
-        </p>
+            <p class="hero-subtitle">
+                Welcome to Food Donation, where we bridge the gap between abundance and need
+                by connecting surplus food from homes, restaurants and events to nearby NGOs and volunteers.
+            </p>
 
-        <div class="hero-buttons mt-4">
-            <a href="{{ route('signup.choice') }}" class="btn btn-warning btn-lg me-3">SignUp</a>
-            <a href="{{ route('login') }}" class="btn btn-warning btn-lg">SignIn</a>
+            <div class="hero-buttons mb-3">
+                @guest
+                    <a href="{{ route('signup.choice') }}" class="btn btn-warning me-2">SignUp</a>
+                    <a href="{{ route('login') }}" class="btn btn-outline-light">SignIn</a>
+                @endguest
 
-
-        </div>
-
-        <p class="mt-4 mb-0">
-            Over 30% of daily meals served to those in need and 100,000+ meals distributed.
-        </p>
-    </div>
-</section>
-
-{{-- ======== WHY SECTION ===========--}}
-<section class="py-5 bg-light">
-    <div class="container">
-        <div class="row align-items-center gy-4">
-            <div class="col-md-6">
-                <h2 class="section-heading mb-3">Why Reduce Food Waste?</h2>
-                <p class="mb-2">
-                    Every day, huge amounts of edible food are thrown away while many people go to bed hungry.
-                    Our Food Waste Donor Management System helps convert that surplus into life-saving meals.
-                </p>
-                <p class="mb-0">
-                    By joining as a donor or organization, you support a smarter, kinder and more sustainable city.
-                </p>
+                @auth
+                    @if(auth()->user()->role === 'donor')
+                        <a href="{{ route('donor.dashboard') }}" class="btn btn-warning">Go to Donor Dashboard</a>
+                    @elseif(auth()->user()->role === 'organization')
+                        <a href="{{ route('organization.dashboard') }}" class="btn btn-warning">Go to NGO Dashboard</a>
+                    @else
+                        <a href="{{ route('dashboard') }}" class="btn btn-warning">Go to Dashboard</a>
+                    @endif
+                @endauth
             </div>
-            <div class="col-md-6">
-                <div class="row g-3">
-                    <div class="col-6">
-                        <div class="p-3 bg-white shadow-sm rounded">
-                            <div class="icon-circle mb-2">
-                                <i class="bi bi-people"></i>
-                            </div>
-                            <h5>Support Communities</h5>
-                            <p class="small mb-0">
-                                Help local NGOs and shelters serve meals to families in crisis.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="p-3 bg-white shadow-sm rounded">
-                            <div class="icon-circle mb-2">
-                                <i class="bi bi-recycle"></i>
-                            </div>
-                            <h5>Reduce Waste</h5>
-                            <p class="small mb-0">
-                                Cut down the food going to landfills and protect the environment.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="p-3 bg-white shadow-sm rounded">
-                            <div class="icon-circle mb-2">
-                                <i class="bi bi-clock-history"></i>
-                            </div>
-                            <h5>Quick Matching</h5>
-                            <p class="small mb-0">
-                                Real-time notifications help NGOs collect food before it spoils.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="p-3 bg-white shadow-sm rounded">
-                            <div class="icon-circle mb-2">
-                                <i class="bi bi-heart"></i>
-                            </div>
-                            <h5>Easy to Use</h5>
-                            <p class="small mb-0">
-                                Simple registration, clear steps and a clean interface for everyone.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <p class="mb-0 small">
+                Over 30% of daily meals served to those in need and 100,000+ meals distributed.
+            </p>
         </div>
     </div>
 </section>
 
-{{-- ===== HOW IT WORKS ==== --}}
-<section class="py-5">
+{{-- ============ ABOUT + HOW IT WORKS ============ --}}
+<section id="about" class="py-5 bg-white">
     <div class="container">
-        <h2 class="section-heading text-center mb-4">How the System Works</h2>
-        <p class="text-center text-muted mb-5">
-            A simple three-step flow ensures safe and fast movement of food from donors to receivers.
+        <h2 class="section-heading text-center mb-2">About the platform</h2>
+        <p class="text-center text-muted mb-5" style="max-width:800px;margin:0 auto;">
+            Our system connects donors with verified NGOs to reduce food waste and ensure that safe surplus food
+            reaches people in need quickly and transparently. Here’s how the flow works:
         </p>
 
         <div class="row g-4 text-center">
             <div class="col-md-4">
-                <div class="p-4 h-100 bg-white shadow-sm rounded">
-                    <div class="icon-circle mb-3 mx-auto">
-                        1
-                    </div>
-                    <h5>Donor Posts Food</h5>
+                <div class="h-100 p-4 shadow-sm rounded bg-light">
+                    <div class="icon-circle mx-auto mb-3">1</div>
+                    <h5>Donor posts surplus food</h5>
                     <p class="small mb-0">
                         Donors share food details, quantity, location and pickup time from their dashboard.
                     </p>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="p-4 h-100 bg-white shadow-sm rounded">
-                    <div class="icon-circle mb-3 mx-auto">
-                        2
-                    </div>
-                    <h5>NGOs Request & Match</h5>
+                <div class="h-100 p-4 shadow-sm rounded bg-light">
+                    <div class="icon-circle mx-auto mb-3">2</div>
+                    <h5>NGOs request pickup</h5>
                     <p class="small mb-0">
-                        Nearby NGOs view available donations, send pickup requests and receive confirmation.
+                        Nearby NGOs browse posts, send pickup requests and receive confirmation in real-time.
                     </p>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="p-4 h-100 bg-white shadow-sm rounded">
-                    <div class="icon-circle mb-3 mx-auto">
-                        3
-                    </div>
-                    <h5>Pickup & Serve</h5>
+                <div class="h-100 p-4 shadow-sm rounded bg-light">
+                    <div class="icon-circle mx-auto mb-3">3</div>
+                    <h5>Food is collected & served</h5>
                     <p class="small mb-0">
-                        Approved requests are collected, safely transported and served to people in need.
+                        Verified organizations collect the food, transport it safely and serve vulnerable people.
                     </p>
                 </div>
             </div>
@@ -226,15 +228,31 @@
     </div>
 </section>
 
-{{-- ===== STATS BAND ========= --}}
-<section class="stats-band py-3">
-  
+{{-- ============ STATS BAND ============ --}}
+<section class="stats-band py-4">
+    <div class="container">
+        <div class="row text-center text-md-start g-4 align-items-center">
+            <div class="col-md-4">
+                <div class="stats-number">500+</div>
+                <div class="stats-label">MEALS SAVED FROM WASTE</div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-number">40+</div>
+                <div class="stats-label">REGISTERED DONORS</div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-number">15+</div>
+                <div class="stats-label">PARTNER NGOS</div>
+            </div>
+        </div>
+    </div>
 </section>
 
-{{-- === FOR DONORS & ORGS ====== --}}
+{{-- ============ WHO CAN JOIN ============ --}}
 <section class="py-5 bg-light">
     <div class="container">
-        <h2 class="section-heading text-center mb-4">Who Can Join?</h2>
+        <h2 class="section-heading text-center mb-4">Who can join?</h2>
+
         <div class="row g-4">
             <div class="col-md-6">
                 <div class="bg-white shadow-sm rounded p-4 h-100">
@@ -243,12 +261,12 @@
                         Restaurants, hotels, caterers, households and event organizers who have
                         safe extra food that would otherwise be wasted.
                     </p>
-                    <ul class="small">
+                    <ul class="small mb-3">
                         <li>Post surplus food in a few clicks</li>
                         <li>Set expiry and pickup time</li>
-                        <li>Track previous donations</li>
+                        <li>Track your previous donations</li>
                     </ul>
-                    <a href="{{ route('register.donor') }}" class="btn btn-success mt-2">
+                    <a href="{{ route('register.donor') }}" class="btn btn-success btn-sm">
                         Register as Donor
                     </a>
                 </div>
@@ -260,12 +278,12 @@
                     <p class="small">
                         NGOs, shelters, orphanages and community kitchens who distribute food to people in need.
                     </p>
-                    <ul class="small">
+                    <ul class="small mb-3">
                         <li>View donations near your location</li>
-                        <li>Send pickup requests quickly</li>
+                        <li>Request pickups in real-time</li>
                         <li>Maintain beneficiary and pickup records</li>
                     </ul>
-                    <a href="{{ route('register.organization') }}" class="btn btn-primary mt-2">
+                    <a href="{{ route('register.organization') }}" class="btn btn-primary btn-sm">
                         Register as Organization
                     </a>
                 </div>
@@ -274,17 +292,67 @@
     </div>
 </section>
 
-{{-- ======== FINAL CALL TO ACTION ==== --}}
+{{-- ============ CONTACT SECTION ============ --}}
+<section id="contact" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-heading text-center mb-3">Contact Us</h2>
+        <p class="text-center text-muted mb-4" style="max-width:700px;margin:0 auto;">
+            Reach out to us anytime. We are here to help donors, NGOs and volunteers.
+        </p>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+
+                <div class="card shadow-sm border-0 rounded">
+                    <div class="card-body p-4">
+
+                        <h5 class="fw-bold mb-3">📞 Contact Information</h5>
+
+                        <p class="mb-2">
+                            <strong>Email:</strong>  
+                            <a href="mailto:info@foodwasteproject.com">info@foodwasteproject.com</a>
+                        </p>
+
+                        <p class="mb-2">
+                            <strong>Phone:</strong> +880 123 456 789
+                        </p>
+
+                        <p class="mb-2">
+                            <strong>Fax:</strong> +880 987 654 321
+                        </p>
+
+                        <p class="mb-0">
+                            <strong>Address:</strong>  
+                            Dhaka, Bangladesh
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{{-- ============ FOOTER SHORT CTA ============ --}}
 <section class="py-5">
     <div class="container text-center">
-        <h2 class="section-heading mb-3">Ready to share a meal?</h2>
+        <h3 class="section-heading mb-3">Ready to share a meal?</h3>
         <p class="text-muted mb-4">
-            Join our Food Waste Donor Management System and help make sure that no safe food
-            ends up in the bin while people are still hungry.
+            Join our Food Waste Platform and help make sure that no safe food ends up in the bin
+            while people are still hungry.
         </p>
-        <a href="{{ route('signup.choice') }}" class="btn btn-success btn-lg px-5">
-            Get Started
-        </a>
+
+        @guest
+            <a href="{{ route('signup.choice') }}" class="btn btn-success px-4">
+                Get Started
+            </a>
+        @else
+            <a href="{{ route('dashboard') }}" class="btn btn-success px-4">
+                Go to Dashboard
+            </a>
+        @endguest
     </div>
 </section>
 
@@ -301,3 +369,4 @@
 </footer>
 
 @endsection
+
