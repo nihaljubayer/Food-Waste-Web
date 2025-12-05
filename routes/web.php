@@ -55,7 +55,6 @@ Route::middleware('auth')
 
 
 // ====================== DONOR ROUTES ======================
-
 Route::middleware('auth')
     ->prefix('donor')
     ->name('donor.')
@@ -75,6 +74,15 @@ Route::middleware('auth')
         // My donations list
         Route::get('/donations', [FoodPostController::class, 'myDonations'])
             ->name('donations');
+
+        // Single donation details page
+        Route::get('/food/{post}', [FoodPostController::class, 'show'])
+            ->name('food.show');
+
+        // NEW: update status (Available / Completed / Cancelled ...)
+        Route::patch('/food/{post}/status', [FoodPostController::class, 'updateStatus'])
+            ->name('food.updateStatus');
+
 
 
         // ================== PICKUP MODULE (FRONTEND ONLY) ==================
