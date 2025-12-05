@@ -112,14 +112,14 @@
     .navbar-brand {
         font-size: 1.45rem;
         font-weight: 800;
-        color: #3a0066 !important;
+        color: #cf81afff !important;
         letter-spacing: .5px;
     }
 
     /* NAV LINKS */
     .nav-link {
         font-weight: 600;
-        color: #4a006e !important;
+        color: #dc9ee9ff !important;
         font-size: 1rem;
         padding: 8px 14px !important;
         border-radius: 6px;
@@ -169,16 +169,24 @@
                     <a href="{{ route('login') }}" class="btn btn-outline-light">SignIn</a>
                 @endguest
 
-                @auth
-                    @if(auth()->user()->role === 'donor')
-                        <a href="{{ route('donor.dashboard') }}" class="btn btn-warning">Go to Donor Dashboard</a>
-                    @elseif(auth()->user()->role === 'organization')
-                        <a href="{{ route('organization.dashboard') }}" class="btn btn-warning">Go to NGO Dashboard</a>
-                    @else
-                        <a href="{{ route('dashboard') }}" class="btn btn-warning">Go to Dashboard</a>
-                    @endif
-                @endauth
-            </div>
+               @auth
+    @if(auth()->user()->role === 'donor')
+        <a href="{{ route('donor.dashboard') }}" class="btn btn-warning">
+            Go to Donor Dashboard
+        </a>
+
+    @elseif(auth()->user()->role === 'organization')
+        <a href="{{ route('ngo.dashboard') }}" class="btn btn-warning">
+            Go to NGO Dashboard
+        </a>
+
+    @else
+        <a href="{{ route('dashboard') }}" class="btn btn-warning">
+            Go to Dashboard
+        </a>
+    @endif
+@endauth
+
 
             <p class="mb-0 small">
                 Over 30% of daily meals served to those in need and 100,000+ meals distributed.

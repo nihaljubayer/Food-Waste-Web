@@ -5,18 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Food Waste Platform')</title>
 
-<<<<<<< HEAD
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
-=======
-    {{-- Bootstrap --}}
+    {{-- Bootstrap CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
->>>>>>> 34debb2978f13e1c75cdcf7c0213af6c34765098
 
-    {{-- Extra Styles --}}
+    {{-- Leaflet CSS (for map) --}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    {{-- Extra page-specific styles --}}
     @stack('styles')
 </head>
 <body>
@@ -31,7 +26,7 @@
             </a>
 
             {{-- Mobile Toggle --}}
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#mainNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -64,12 +59,12 @@
                     {{-- If User is NOT logged in --}}
                     @guest
                         <li class="nav-item me-2">
-                            <a href="{{ route('signup.choice') }}" 
+                            <a href="{{ route('signup.choice') }}"
                                class="btn btn-outline-success btn-sm">Sign Up</a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('login') }}" 
+                            <a href="{{ route('login') }}"
                                class="btn btn-success btn-sm">Sign In</a>
                         </li>
                     @endguest
@@ -86,7 +81,7 @@
 
                         @elseif($user->role === 'organization')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('organization.dashboard') }}">
+                                <a class="nav-link" href="{{ route('ngo.dashboard') }}">
                                     NGO Dashboard
                                 </a>
                             </li>
@@ -101,14 +96,13 @@
 
                         {{-- User Dropdown --}}
                         <li class="nav-item dropdown ms-2">
-                            <a class="nav-link dropdown-toggle fw-semibold" href="#" 
+                            <a class="nav-link dropdown-toggle fw-semibold" href="#"
                                data-bs-toggle="dropdown">
                                 {{ $user->name }}
                                 <span class="badge bg-success text-uppercase small">{{ $user->role }}</span>
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-end">
-
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
@@ -117,7 +111,6 @@
                                         </button>
                                     </form>
                                 </li>
-
                             </ul>
                         </li>
 
@@ -129,24 +122,20 @@
         </div>
     </nav>
 
-
-<<<<<<< HEAD
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-=======
-
     {{-- ================= PAGE CONTENT ================= --}}
-    @yield('content')
+    <div class="container-fluid py-3">
+        @yield('content')
+    </div>
 
-
-    {{-- ================= Bootstrap JS ================= --}}
+    {{-- ================= SCRIPTS ================= --}}
+    {{-- Bootstrap JS --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    {{-- Leaflet JS --}}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    {{-- Extra page-specific scripts --}}
     @stack('scripts')
->>>>>>> 34debb2978f13e1c75cdcf7c0213af6c34765098
 
 </body>
 </html>
