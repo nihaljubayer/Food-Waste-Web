@@ -3,76 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title','Food Donation')</title>
+    <title>@yield('title', 'Food Waste Platform')</title>
 
+<<<<<<< HEAD
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
+=======
+    {{-- Bootstrap --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+>>>>>>> 34debb2978f13e1c75cdcf7c0213af6c34765098
 
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-    <style>
-        body {
-            background: #e5d3e1ff;
-        }
-        .top-navbar {
-            background: linear-gradient(135deg, #48c2d2ff, #a180d5ff);
-        }
-        .top-navbar .navbar-brand {
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-        .dashboard-card {
-            border-radius: 16px;
-        }
-        .stat-card {
-            border-radius: 16px;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
-        }
-        .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-        }
-    </style>
+    {{-- Extra Styles --}}
+    @stack('styles')
 </head>
 <body>
 
-    {{-- Top Navbar --}}
-    <nav class="navbar navbar-expand-lg navbar-dark top-navbar shadow-sm">
+    {{-- ================= NAVBAR ================= --}}
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">
+
+            {{-- Brand --}}
+            <a class="navbar-brand fw-bold" href="{{ route('home') }}">
                 Food Waste Platform
             </a>
 
-            <div class="ms-auto">
-                @auth
-                    <span class="text-white-50 me-3">{{ auth()->user()->name }}</span>
-                    <a href="{{ route('dashboard') }}" class="btn btn-sm btn-light me-2">Dashboard</a>
-                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                        @csrf
-                        <button class="btn btn-sm btn-outline-light">Logout</button>
-                    </form>
-                @endauth
+            {{-- Mobile Toggle --}}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#mainNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                @guest
-                    <a href="{{ route('login') }}" class="btn btn-sm btn-light">Login</a>
-                @endguest
+            {{-- Menu Items --}}
+            <div class="collapse navbar-collapse" id="mainNavbar">
+
+                {{-- Left Side Menu --}}
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('home') }}">Home</a>
+                    </li>
+
+                    {{-- ABOUT section on home page --}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('home') }}#about">About</a>
+                    </li>
+
+                    {{-- CONTACT section on home page --}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('home') }}#contact">Contact</a>
+                    </li>
+
+                </ul>
+
+                {{-- Right Side --}}
+                <ul class="navbar-nav ms-auto">
+
+                    {{-- If User is NOT logged in --}}
+                    @guest
+                        <li class="nav-item me-2">
+                            <a href="{{ route('signup.choice') }}" 
+                               class="btn btn-outline-success btn-sm">Sign Up</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('login') }}" 
+                               class="btn btn-success btn-sm">Sign In</a>
+                        </li>
+                    @endguest
+
+                    {{-- If User IS Logged In --}}
+                    @auth
+                        @php $user = auth()->user(); @endphp
+
+                        {{-- Role Based Menu --}}
+                        @if($user->role === 'donor')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('donor.dashboard') }}">Dashboard</a>
+                            </li>
+
+                        @elseif($user->role === 'organization')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('organization.dashboard') }}">
+                                    NGO Dashboard
+                                </a>
+                            </li>
+
+                        @elseif($user->role === 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                                    Admin Panel
+                                </a>
+                            </li>
+                        @endif
+
+                        {{-- User Dropdown --}}
+                        <li class="nav-item dropdown ms-2">
+                            <a class="nav-link dropdown-toggle fw-semibold" href="#" 
+                               data-bs-toggle="dropdown">
+                                {{ $user->name }}
+                                <span class="badge bg-success text-uppercase small">{{ $user->role }}</span>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-end">
+
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button class="dropdown-item text-danger" type="submit">
+                                            Logout
+                                        </button>
+                                    </form>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    @endauth
+
+                </ul>
+
             </div>
         </div>
     </nav>
 
-    <main class="container py-4">
-        @yield('content')
-    </main>
 
+<<<<<<< HEAD
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+=======
+
+    {{-- ================= PAGE CONTENT ================= --}}
+    @yield('content')
+
+
+    {{-- ================= Bootstrap JS ================= --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    @stack('scripts')
+>>>>>>> 34debb2978f13e1c75cdcf7c0213af6c34765098
 
 </body>
 </html>
