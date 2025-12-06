@@ -7,6 +7,8 @@ use App\Http\Controllers\Donor\DashboardController as DonorDashboardController;
 use App\Http\Controllers\Donor\FoodPostController;
 use App\Http\Controllers\NgoController;
 use App\Http\Controllers\NgoOrderController;
+use App\Http\Controllers\Donor\ProfileController;
+
 
 
 // ====================== PUBLIC ROUTES ======================
@@ -82,6 +84,25 @@ Route::middleware('auth')
         // NEW: update status (Available / Completed / Cancelled ...)
         Route::patch('/food/{post}/status', [FoodPostController::class, 'updateStatus'])
             ->name('food.updateStatus');
+
+        // Edit + Update + Delete
+        Route::get('/food/{post}/edit', [FoodPostController::class, 'edit'])
+            ->name('food.edit');
+        Route::put('/food/{post}', [FoodPostController::class, 'update'])
+            ->name('food.update');
+        Route::delete('/food/{post}', [FoodPostController::class, 'destroy'])
+            ->name('food.destroy');
+
+        // ------- DONOR PROFILE ROUTES -------
+        Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+ 
+        Route::get('/profile/password', [ProfileController::class, 'passwordForm'])->name('profile.password');
+        Route::post('/profile/password/update', [ProfileController::class, 'updatePassword'])
+            ->name('profile.password.update');
+
+
 
 
 
