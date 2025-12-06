@@ -132,6 +132,12 @@
             color:#0284c7;
             font-size:1.7rem;
         }
+
+        /* action buttons */
+        .mydon-actions .btn{
+            font-size:.75rem;
+            padding:.25rem .6rem;
+        }
     </style>
 
     <div class="donations-wrapper py-4 py-md-5">
@@ -143,7 +149,7 @@
                     <div>
                         <h2 class="donor-hero-title mb-1">My Donations</h2>
                         <p class="donor-hero-subtitle mb-0">
-                            A quick overview of all the meals you’ve shared so far.  
+                            A quick overview of all the meals you’ve shared so far.
                             Thank you for helping reduce food waste and hunger.
                         </p>
                     </div>
@@ -240,10 +246,11 @@
                             <table class="table mydon-table align-middle mb-0">
                                 <thead>
                                     <tr>
-                                        <th style="width: 40%">Title</th>
-                                        <th style="width: 15%">Quantity</th>
-                                        <th style="width: 15%">Status</th>
-                                        <th style="width: 30%">Posted at</th>
+                                        <th style="width: 34%">Title</th>
+                                        <th style="width: 14%">Quantity</th>
+                                        <th style="width: 14%">Status</th>
+                                        <th style="width: 24%">Posted at</th>
+                                        <th style="width: 14%">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -298,6 +305,33 @@
                                                     {{ $post->created_at->diffForHumans() }}
                                                 </div>
                                             </td>
+
+                                            {{-- Actions: View / Edit / Delete --}}
+                                            <td>
+                                                <div class="mydon-actions d-flex flex-wrap gap-1">
+                                                    <a href="{{ route('donor.food.show', $post->id) }}"
+                                                       class="btn btn-outline-secondary btn-sm">
+                                                        View
+                                                    </a>
+
+                                                    <a href="{{ route('donor.food.edit', $post->id) }}"
+                                                       class="btn btn-outline-primary btn-sm">
+                                                        Edit
+                                                    </a>
+
+                                                    <form action="{{ route('donor.food.destroy', $post->id) }}"
+                                                          method="POST"
+                                                          class="d-inline"
+                                                          onsubmit="return confirm('Are you sure you want to delete this post?');">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                                class="btn btn-outline-danger btn-sm">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -310,3 +344,4 @@
         </div>
     </div>
 @endsection
+
