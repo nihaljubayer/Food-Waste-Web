@@ -103,15 +103,27 @@
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li>
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button class="dropdown-item text-danger" type="submit">
-                                            Logout
-                                        </button>
-                                    </form>
-                                </li>
+
+              {{-- Profile Page --}}
+                    <li>
+                          <a class="dropdown-item" href="{{ route('donor.profile') }}">
+                               My Profile
+                          </a>
+                   </li>
+
+                        <li><hr class="dropdown-divider"></li>
+
+                {{-- Logout --}}
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                               <button class="dropdown-item text-danger" type="submit">
+                                             Logout
+                               </button>
+                              </form>
+                             </li>
                             </ul>
+
                         </li>
 
                     @endauth
