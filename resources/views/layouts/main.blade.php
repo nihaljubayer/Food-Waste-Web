@@ -13,11 +13,40 @@
 
     {{-- Extra page-specific styles --}}
     @stack('styles')
+    <style>
+    .navbar {
+        background-color: #4a148c !important; /* Dark Purple */
+    }
+
+    .navbar .navbar-brand,
+    .navbar .nav-link {
+        color: #fff !important;        /* White Text */
+        font-weight: 600;
+    }
+
+    .navbar .nav-link:hover {
+        color: #e1bbee !important;     /* Light Purple Hover */
+    }
+
+    .navbar .dropdown-menu {
+        background-color: #4a148c !important;
+    }
+
+    .navbar .dropdown-item {
+        color: #fff !important;
+    }
+
+    .navbar .dropdown-item:hover {
+        background-color: #6a1b9a !important;
+    }
+</style>
+
 </head>
 <body>
 
     {{-- ================= NAVBAR ================= --}}
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-purple shadow-sm">
+    
         <div class="container">
 
             {{-- Brand --}}
@@ -60,7 +89,7 @@
                     @guest
                         <li class="nav-item me-2">
                             <a href="{{ route('signup.choice') }}"
-                               class="btn btn-outline-success btn-sm">Sign Up</a>
+                               class="btn btn-success btn-sm">Sign Up</a>
                         </li>
 
                         <li class="nav-item">
