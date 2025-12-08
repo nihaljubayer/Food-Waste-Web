@@ -8,6 +8,7 @@ use App\Http\Controllers\Donor\FoodPostController;
 use App\Http\Controllers\NgoController;
 use App\Http\Controllers\NgoOrderController;
 use App\Http\Controllers\Donor\ProfileController;
+use App\Http\Controllers\Donor\NgoBrowseController;
 
 
 
@@ -101,6 +102,10 @@ Route::middleware('auth')
         Route::get('/profile/password', [ProfileController::class, 'passwordForm'])->name('profile.password');
         Route::post('/profile/password/update', [ProfileController::class, 'updatePassword'])
             ->name('profile.password.update');
+
+        // Donor: Browse NGO List
+        Route::get('/ngos', [NgoBrowseController::class, 'index'])
+            ->name('ngos.index');
 
 
 
