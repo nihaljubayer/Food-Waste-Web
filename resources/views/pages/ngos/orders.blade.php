@@ -9,39 +9,48 @@
     </div>
 
     <div class="col-md-9">
-        <div class="card shadow-sm border-0 dashboard-card mb-3">
-            <div class="card-body">
-                <h3 class="mb-1">Pickup Requests / Orders</h3>
-                <small class="text-muted">All food pickup requests handled by your organization.</small>
-            </div>
-        </div>
-
         <div class="card shadow-sm border-0 dashboard-card">
-            <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                <span class="fw-semibold">
-                    <i class="bi bi-box-seam me-1"></i> Recent Orders
-                </span>
+            <div class="card-body">
+                <h3 class="mb-1">Pickup Orders</h3>
+                <small class="text-muted">All pickup requests assigned to your NGO.</small>
+                <hr>
 
-                <div class="d-flex gap-2">
-                    <select class="form-select form-select-sm" style="width: 140px;">
-                        <option selected>Status: All</option>
-                        <option>Pending</option>
-                        <option>Accepted</option>
-                        <option>Completed</option>
-                    </select>
-                    <div class="input-group input-group-sm" style="width: 200px;">
-                        <span class="input-group-text"><i class="bi bi-search"></i></span>
-                        <input type="text" class="form-control" placeholder="Search donor..." disabled>
+                @if(session('success'))
+                    <div class="alert alert-success py-2">{{ session('success') }}</div>
+                @endif
+
+                @if($orders->count())
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Donor</th>
+                                    <th>Food Title</th>
+                                    <th>Pickup Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($orders as $order)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $order->donor_name ?? '-' }}</td>
+                                        <td>{{ $order->food_title ?? '-' }}</td>
+                                        <td>{{ $order->pickup_time ?? '-' }}</td>
+                                        <td>
+                                            <span class="badge bg-secondary text-capitalize">
+                                                {{ $order->status }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-            </div>
-
-            <div class="card-body p-0">
-                <div class="p-4 text-center text-muted">
-                    <i class="bi bi-inbox display-6 d-block mb-2"></i>
-                    <p class="mb-1">No pickup requests yet.</p>
-                    <small>Once donors send pickup requests and you accept them, they will appear here.</small>
-                </div>
+                @else
+                    <p class="mb-0 text-muted">No orders found for your NGO yet.</p>
+                @endif
             </div>
         </div>
     </div>
