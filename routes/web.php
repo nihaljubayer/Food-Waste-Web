@@ -151,6 +151,16 @@ Route::post('/ngo/settings', [NgoController::class, 'updateSettings'])
     Route::patch('/ngo/orders/{order}/status', [NgoOrderController::class, 'updateStatus'])
     ->name('ngo.orders.updateStatus')
     ->middleware('auth');
+    // ALL NGOs list (view only)
+Route::get('/ngo/all-ngos', [NgoController::class, 'allNgos'])
+    ->name('ngo.all_ngos')
+    ->middleware('auth');
+
+// Donors list (view only)
+Route::get('/ngo/donors', [NgoController::class, 'donors'])
+    ->name('ngo.donors')
+    ->middleware('auth');
+
 
 
 

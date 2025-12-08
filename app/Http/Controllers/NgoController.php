@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ngo;
-use App\Models\PickupRequest;   // 👈 NEW
+use App\Models\User;
+use App\Models\PickupRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-
 
 class NgoController extends Controller
 {
@@ -25,13 +24,13 @@ class NgoController extends Controller
 
         // If logged-in user is an Organization
         if ($user->role === 'organization') {
-            $ngo = Ngo::where('email', $user->email)->first();
+            $ngo  = Ngo::where('email', $user->email)->first();
             $ngos = $ngo ? collect([$ngo]) : collect();
             $ngoId = $ngo?->id;
-        } 
+        }
         // If Admin → see all NGOs
         else {
-            $ngos = Ngo::latest()->get();
+            $ngos  = Ngo::latest()->get();
             $ngoId = null;
         }
 
@@ -44,11 +43,18 @@ class NgoController extends Controller
 
         // If NGO is logged in → calculate real stats
         if ($ngoId) {
-            $stats['total_pickups'] = PickupRequest::where('ngo_id', $ngoId)->count();
+            $stats['total_pickups'] =
+                PickupRequest::where('ngo_id', $ngoId)->count();
+
             $stats['pending_requests'] =
-                PickupRequest::where('ngo_id', $ngoId)->where('status', 'pending')->count();
+                PickupRequest::where('ngo_id', $ngoId)
+                    ->where('status', 'pending')
+                    ->count();
+
             $stats['completed_pickups'] =
-                PickupRequest::where('ngo_id', $ngoId)->where('status', 'completed')->count();
+                PickupRequest::where('ngo_id', $ngoId)
+                    ->where('status', 'completed')
+                    ->count();
         }
 
         return view('pages.ngos.index', compact('ngos', 'stats'));
@@ -68,16 +74,17 @@ class NgoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'   => 'required|string|max:255',
-            'email'  => 'required|email|unique:ngos,email',
-            'phone'  => 'nullable|string|max:20',
-            'address'=> 'nullable|string|max:255',
-            'status' => 'required|in:pending,approved,rejected',
+            'name'    => 'required|string|max:255',
+            'email'   => 'required|email|unique:ngos,email',
+            'phone'   => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
+            'status'  => 'required|in:pending,approved,rejected',
         ]);
 
         Ngo::create($request->all());
 
-        return redirect()->route('ngos.index')->with('success', 'NGO created successfully.');
+        return redirect()->route('ngos.index')
+            ->with('success', 'NGO created successfully.');
     }
 
     // ===========================
@@ -94,16 +101,17 @@ class NgoController extends Controller
     public function update(Request $request, Ngo $ngo)
     {
         $request->validate([
-            'name'   => 'required|string|max:255',
-            'email'  => 'required|email|unique:ngos,email,' . $ngo->id,
-            'phone'  => 'nullable|string|max:20',
-            'address'=> 'nullable|string|max:255',
-            'status' => 'required|in:pending,approved,rejected',
+            'name'    => 'required|string|max:255',
+            'email'   => 'required|email|unique:ngos,email,' . $ngo->id,
+            'phone'   => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
+            'status'  => 'required|in:pending,approved,rejected',
         ]);
 
         $ngo->update($request->all());
 
-        return redirect()->route('ngos.index')->with('success', 'NGO updated successfully.');
+        return redirect()->route('ngos.index')
+            ->with('success', 'NGO updated successfully.');
     }
 
     // ===========================
@@ -112,11 +120,13 @@ class NgoController extends Controller
     public function destroy(Ngo $ngo)
     {
         $ngo->delete();
-        return redirect()->route('ngos.index')->with('success', 'NGO deleted successfully.');
+
+        return redirect()->route('ngos.index')
+            ->with('success', 'NGO deleted successfully.');
     }
 
     // ===========================
-    // NGO SETTINGS UPDATE (MAIN PART)
+    // NGO SETTINGS UPDATE
     // ===========================
     public function updateSettings(Request $request)
     {
@@ -156,11 +166,38 @@ class NgoController extends Controller
     }
 
     // ===========================
-    // PUBLIC NGO LIST (optional feature)
+    // PUBLIC NGO LIST (optional)
     // ===========================
     public function publicList()
     {
-        $ngos = Ngo::where('status', 'approved')->orderBy('name')->get();
+        $ngos = Ngo::where('status', 'approved')
+            ->orderBy('name')
+            ->get();
+
         return view('pages.ngos.public', compact('ngos'));
+    }
+
+    // ===========================
+    // ALL NGOS LIST (for NGO panel)
+    // ===========================
+    public function allNgos()
+    {
+        // sob NGO newest first
+        $ngos = Ngo::latest()->get();
+
+        return view('pages.ngos.all_ngos', compact('ngos'));
+    }
+
+    // ===========================
+    // DONORS LIST (view only)
+    // ===========================
+    public function donors()
+    {
+        // sob donor user newest first
+        $donors = User::where('role', 'donor')
+            ->latest()
+            ->get();
+
+        return view('pages.ngos.donors', compact('donors'));
     }
 }
