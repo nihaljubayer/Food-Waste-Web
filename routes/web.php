@@ -105,7 +105,8 @@ Route::middleware('auth')
 
         // Donor: Browse NGO List
         Route::get('/ngos', [NgoBrowseController::class, 'index'])
-            ->name('ngos.index');
+    ->name('ngos.index');
+
 
 
 
@@ -164,10 +165,6 @@ Route::get('/ngo/all-ngos', [NgoController::class, 'allNgos'])
 // Donors list (view only)
 Route::get('/ngo/donors', [NgoController::class, 'donors'])
     ->name('ngo.donors')
-    ->middleware('auth');
-    // Donor side: browse all approved NGOs
-Route::get('/donor/ngos', [NgoController::class, 'publicList'])
-    ->name('donor.ngos.index')
     ->middleware('auth');
 
 
