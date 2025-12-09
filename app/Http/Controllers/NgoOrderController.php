@@ -14,35 +14,39 @@ class NgoOrderController extends Controller
         $this->middleware('auth');
     }
 
-    // ORDER LIST NGO SIDE
+    // =========================
+    // SHOW ORDERS LIST FOR NGO
+    // =========================
     public function index()
     {
         $user = Auth::user();
 
-        // Logged-in NGO find by email
-        $ngo = Ngo::where('email', $user->email)->firstOrFail();
+        // logged-in user er NGO row niye ashi
+        $ngo = Ngo::where('email', $user->email)->first();
 
-        // All pickup requests for this NGO
-        $orders = PickupRequest::with('donor')
-            ->where('ngo_id', $ngo->id)
-            ->latest()
-            ->get();
+        if (!$ngo) {
+            // jodi kono ngo na thake
+            $orders = collect();
+        } else {
+            $orders = PickupRequest::where('ngo_id', $ngo->id)
+                        ->latest()
+                        ->get();
+        }
 
         return view('pages.ngos.orders', compact('orders'));
     }
 
-    // STATUS UPDATE (accept / complete / cancel)
-    public function updateStatus(Request $request, PickupRequest $order)
+    // (jodi pore status update lagbe, eigulo thakbe)
+    public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:accepted,completed,cancelled',
+            'status' => 'required|in:pending,accepted,completed,cancelled',
         ]);
 
+        $order = PickupRequest::findOrFail($id);
         $order->status = $request->status;
         $order->save();
 
         return back()->with('success', 'Order status updated to ' . $request->status . '.');
     }
 }
-
-

@@ -14,147 +14,160 @@
     {{-- Extra page-specific styles --}}
     @stack('styles')
     <style>
-    .navbar {
-        background-color: #4a148c !important; /* Dark Purple */
-    }
+  /* RESET – prevent navbar from collapsing */
+.navbar {
+    min-height: 70px !important;
+    display: flex !important;
+    align-items: center !important;
+}
 
-    .navbar .navbar-brand,
-    .navbar .nav-link {
-        color: #fff !important;        /* White Text */
-        font-weight: 600;
-    }
+/* 🌸 Soft Lavender Gradient Navbar */
+.navbar {
+    background: linear-gradient(90deg, #e8d9ff, #d8c7ff, #c7b3ff) !important;
+    padding: 12px 0 !important;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    z-index: 1000;
+}
 
-    .navbar .nav-link:hover {
-        color: #e1bbee !important;     /* Light Purple Hover */
-    }
+/* Brand + Link Styling */
+.navbar .navbar-brand,
+.navbar .nav-link {
+    color: #3f2b6d !important;
+    font-weight: 600;
+    transition: 0.25s ease-in-out;
+}
 
-    .navbar .dropdown-menu {
-        background-color: #4a148c !important;
-    }
+/* Hover */
+.navbar .nav-link:hover {
+    color: #6b4bce !important;
+    text-shadow: 0 0 6px rgba(107, 75, 206, 0.4);
+}
 
-    .navbar .dropdown-item {
-        color: #fff !important;
-    }
+/* Dropdown menu */
+.navbar .dropdown-menu {
+    background: #f4e8ff !important;
+    border: 1px solid #d8c7ff !important;
+    border-radius: 10px;
+}
 
-    .navbar .dropdown-item:hover {
-        background-color: #6a1b9a !important;
-    }
+/* Dropdown item */
+.navbar .dropdown-item {
+    color: #3f2b6d !important;
+}
+.navbar .dropdown-item:hover {
+    background: #e8d9ff !important;
+    color: #6b4bce !important;
+}
+
+</style>
+
+
+
+
+
 </style>
 
 </head>
 <body>
 
-    {{-- ================= NAVBAR ================= --}}
+  {{-- ================= NAVBAR ================= --}}
     <nav class="navbar navbar-expand-lg navbar-light bg-purple shadow-sm">
-    
         <div class="container">
 
-            {{-- Brand --}}
             <a class="navbar-brand fw-bold" href="{{ route('home') }}">
                 Food Waste Platform
             </a>
 
-            {{-- Mobile Toggle --}}
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#mainNavbar">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            {{-- Menu Items --}}
             <div class="collapse navbar-collapse" id="mainNavbar">
 
-                {{-- Left Side Menu --}}
+                {{-- LEFT MENU --}}
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">Home</a>
                     </li>
 
-                    {{-- ABOUT section on home page --}}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}#about">About</a>
                     </li>
 
-                    {{-- CONTACT section on home page --}}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}#contact">Contact</a>
                     </li>
 
                 </ul>
 
-                {{-- Right Side --}}
+                {{-- RIGHT MENU --}}
                 <ul class="navbar-nav ms-auto">
 
-                    {{-- If User is NOT logged in --}}
                     @guest
                         <li class="nav-item me-2">
-                            <a href="{{ route('signup.choice') }}"
-                               class="btn btn-success btn-sm">Sign Up</a>
+                            <a href="{{ route('signup.choice') }}" class="btn btn-success btn-sm">Sign Up</a>
                         </li>
-
                         <li class="nav-item">
-                            <a href="{{ route('login') }}"
-                               class="btn btn-success btn-sm">Sign In</a>
+                            <a href="{{ route('login') }}" class="btn btn-success btn-sm">Sign In</a>
                         </li>
                     @endguest
 
-                    {{-- If User IS Logged In --}}
                     @auth
                         @php $user = auth()->user(); @endphp
 
-                        {{-- Role Based Menu --}}
+                        {{-- Role wise dashboard links --}}
                         @if($user->role === 'donor')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('donor.dashboard') }}">Dashboard</a>
                             </li>
 
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('donor.ngos.index') }}">NGOs</a>
+                            </li>
+
+
                         @elseif($user->role === 'organization')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('ngo.dashboard') }}">
-                                    NGO Dashboard
-                                </a>
+                                <a class="nav-link" href="{{ route('ngo.dashboard') }}">NGO Dashboard</a>
                             </li>
 
                         @elseif($user->role === 'admin')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.dashboard') }}">
-                                    Admin Panel
-                                </a>
+                                <a class="nav-link" href="{{ route('admin.dashboard') }}">Admin Panel</a>
                             </li>
                         @endif
 
-                        {{-- User Dropdown --}}
+
+                        {{-- USER DROPDOWN --}}
                         <li class="nav-item dropdown ms-2">
-                            <a class="nav-link dropdown-toggle fw-semibold" href="#"
-                               data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle fw-semibold" href="#" data-bs-toggle="dropdown">
                                 {{ $user->name }}
                                 <span class="badge bg-success text-uppercase small">{{ $user->role }}</span>
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-end">
 
-              {{-- Profile Page --}}
-                    <li>
-                          <a class="dropdown-item" href="{{ route('donor.profile') }}">
-                               My Profile
-                          </a>
-                   </li>
+                                {{-- Profile --}}
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('donor.profile') }}">
+                                        My Profile
+                                    </a>
+                                </li>
 
-                        <li><hr class="dropdown-divider"></li>
+                                <li><hr class="dropdown-divider"></li>
 
-                {{-- Logout --}}
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                               <button class="dropdown-item text-danger" type="submit">
-                                             Logout
-                               </button>
-                              </form>
-                             </li>
+                                {{-- Logout --}}
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button class="dropdown-item text-danger" type="submit">
+                                            Logout
+                                        </button>
+                                    </form>
+                                </li>
                             </ul>
-
                         </li>
-
                     @endauth
 
                 </ul>
@@ -163,20 +176,91 @@
         </div>
     </nav>
 
+
+
+    {{-- ================= GLOBAL NOTIFICATIONS ================= --}}
+    @if (session('success') || session('error') || session('warning') || session('info') || $errors->any())
+        <div class="container mt-3">
+
+            {{-- SUCCESS --}}
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+                    <strong>✔ Success:</strong> {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            {{-- ERROR --}}
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+                    <strong>⚠ Error:</strong> {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            {{-- WARNING --}}
+            @if (session('warning'))
+                <div class="alert alert-warning alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+                    <strong>⚠ Warning:</strong> {{ session('warning') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            {{-- INFO --}}
+            @if (session('info'))
+                <div class="alert alert-info alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+                    <strong>ℹ Info:</strong> {{ session('info') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            {{-- VALIDATION ERRORS --}}
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+                    <strong>⚠ Please fix the following:</strong>
+                    <ul class="mt-2 mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+        </div>
+    @endif
+
+
+
     {{-- ================= PAGE CONTENT ================= --}}
     <div class="container-fluid py-3">
         @yield('content')
     </div>
 
+
+
     {{-- ================= SCRIPTS ================= --}}
-    {{-- Bootstrap JS --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    {{-- Leaflet JS --}}
+    {{-- Auto-close alerts --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const alerts = document.querySelectorAll('.alert-dismissible');
+            setTimeout(() => {
+                alerts.forEach(alert => {
+                    const instance = bootstrap.Alert.getOrCreateInstance(alert);
+                    instance.close();
+                });
+            }, 4000);
+        });
+    </script>
+
+    {{-- Leaflet --}}
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    {{-- Extra page-specific scripts --}}
     @stack('scripts')
 
+</body>
+</html>
 </body>
 </html>

@@ -9,6 +9,12 @@ use App\Http\Controllers\Donor\PickupController;
 use App\Http\Controllers\Donor\ProfileController;
 use App\Http\Controllers\NgoController;
 use App\Http\Controllers\NgoOrderController;
+<<<<<<< HEAD
+=======
+use App\Http\Controllers\Donor\ProfileController;
+use App\Http\Controllers\Donor\NgoBrowseController;
+
+>>>>>>> 33bb216f99421c32df822e52964e90e2ef9cc8ad
 
 
 // ====================== PUBLIC ROUTES ======================
@@ -103,6 +109,11 @@ Route::middleware('auth')
         Route::post('/profile/password/update', [ProfileController::class, 'updatePassword'])
             ->name('profile.password.update');
 
+        // Donor: Browse NGO List
+        Route::get('/ngos', [NgoBrowseController::class, 'index'])
+    ->name('ngos.index');
+
+
 
         // ================== PICKUP MODULE (BACKEND) ==================
 
@@ -159,3 +170,11 @@ Route::get('/ngo/all-ngos', [NgoController::class, 'allNgos'])
 Route::get('/ngo/donors', [NgoController::class, 'donors'])
     ->name('ngo.donors')
     ->middleware('auth');
+<<<<<<< HEAD
+=======
+
+
+
+
+
+>>>>>>> 33bb216f99421c32df822e52964e90e2ef9cc8ad
