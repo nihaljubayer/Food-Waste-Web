@@ -1,18 +1,4 @@
-<?php
-
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Donor\DashboardController as DonorDashboardController;
-use App\Http\Controllers\Donor\FoodPostController;
-use App\Http\Controllers\Donor\PickupController;
-use App\Http\Controllers\Donor\ProfileController;
-use App\Http\Controllers\Donor\NgoBrowseController;
-use App\Http\Controllers\NgoController;
-use App\Http\Controllers\NgoOrderController;
-
-
-<?php
+﻿<?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -126,15 +112,15 @@ Route::middleware('auth')
 
         // ================== PICKUP MODULE (BACKEND) ==================
 
-        // Show pickup form  → GET /donor/pickups/create
+        // Show pickup form   GET /donor/pickups/create
         Route::get('/pickups/create', [PickupController::class, 'create'])
             ->name('pickups.create');
 
-        // Store pickup form → POST /donor/pickups
+        // Store pickup form  POST /donor/pickups
         Route::post('/pickups', [PickupController::class, 'store'])
             ->name('pickups.store');
 
-        // List pickups      → GET /donor/pickups
+        // List pickups       GET /donor/pickups
         Route::get('/pickups', [PickupController::class, 'index'])
             ->name('pickups.index');
     });
@@ -152,7 +138,7 @@ Route::view('/ngo/profile', 'pages.ngos.profile')
     ->middleware('auth');
 
 // Orders (jodi controller diye set kora thake)
-Route::get('/ngo/orders', [\App\Http\Controllers\NgoOrderController::class, 'index'])
+Route::get('/ngo/orders', [\\App\\Http\\Controllers\\NgoOrderController::class, 'index'])
     ->name('ngo.orders')
     ->middleware('auth');
 
@@ -161,11 +147,11 @@ Route::view('/ngo/settings', 'pages.ngos.settings')
     ->name('ngo.settings')
     ->middleware('auth');
 
-// Settings form submit (POST)  👈 ei line ta NOTUN
+// Settings form submit (POST)   ei line ta NOTUN
 Route::post('/ngo/settings', [NgoController::class, 'updateSettings'])
     ->name('ngo.settings.update')
     ->middleware('auth');
-// Update order status (PATCH) 👈 ei line ta NOTUN
+// Update order status (PATCH)  ei line ta NOTUN
 Route::patch('/ngo/orders/{order}/status', [NgoOrderController::class, 'updateStatus'])
     ->name('ngo.orders.updateStatus')
     ->middleware('auth');
@@ -178,8 +164,3 @@ Route::get('/ngo/all-ngos', [NgoController::class, 'allNgos'])
 Route::get('/ngo/donors', [NgoController::class, 'donors'])
     ->name('ngo.donors')
     ->middleware('auth');
-
-
-
-
-
