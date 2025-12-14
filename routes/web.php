@@ -9,12 +9,18 @@ use App\Http\Controllers\Donor\PickupController;
 use App\Http\Controllers\Donor\ProfileController;
 use App\Http\Controllers\NgoController;
 use App\Http\Controllers\NgoOrderController;
-<<<<<<< HEAD
-=======
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Donor\DashboardController as DonorDashboardController;
+use App\Http\Controllers\Donor\FoodPostController;
+use App\Http\Controllers\Donor\PickupController;
 use App\Http\Controllers\Donor\ProfileController;
 use App\Http\Controllers\Donor\NgoBrowseController;
-
->>>>>>> 33bb216f99421c32df822e52964e90e2ef9cc8ad
+use App\Http\Controllers\NgoController;
+use App\Http\Controllers\NgoOrderController;
 
 
 // ====================== PUBLIC ROUTES ======================
@@ -45,10 +51,6 @@ Route::post('/login', [AuthController::class, 'login'])
 Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout');
 
-Route::get('/dashboard', [AuthController::class, 'dashboard'])
-    ->middleware('auth')
-    ->name('dashboard');
-
 
 // ====================== ADMIN ROUTES ======================
 
@@ -60,6 +62,7 @@ Route::middleware('auth')
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])
             ->name('dashboard');
     });
+
 
 
 // ====================== DONOR ROUTES ======================
@@ -111,7 +114,7 @@ Route::middleware('auth')
 
         // Donor: Browse NGO List
         Route::get('/ngos', [NgoBrowseController::class, 'index'])
-    ->name('ngos.index');
+            ->name('ngos.index');
 
 
 
@@ -129,6 +132,7 @@ Route::middleware('auth')
         Route::get('/pickups', [PickupController::class, 'index'])
             ->name('pickups.index');
     });
+
 
 
 // ====================== NGO ROUTES ======================
@@ -156,10 +160,10 @@ Route::post('/ngo/settings', [NgoController::class, 'updateSettings'])
     ->name('ngo.settings.update')
     ->middleware('auth');
 // Update order status (PATCH) 👈 ei line ta NOTUN
-    Route::patch('/ngo/orders/{order}/status', [NgoOrderController::class, 'updateStatus'])
+Route::patch('/ngo/orders/{order}/status', [NgoOrderController::class, 'updateStatus'])
     ->name('ngo.orders.updateStatus')
     ->middleware('auth');
-    // ALL NGOs list (view only)
+// ALL NGOs list (view only)
 Route::get('/ngo/all-ngos', [NgoController::class, 'allNgos'])
     ->name('ngo.all_ngos')
     ->middleware('auth');
@@ -168,11 +172,6 @@ Route::get('/ngo/all-ngos', [NgoController::class, 'allNgos'])
 Route::get('/ngo/donors', [NgoController::class, 'donors'])
     ->name('ngo.donors')
     ->middleware('auth');
-<<<<<<< HEAD
-=======
-
-
-
 
 
 >>>>>>> 33bb216f99421c32df822e52964e90e2ef9cc8ad
