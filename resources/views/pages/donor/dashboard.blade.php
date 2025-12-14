@@ -211,6 +211,61 @@
         </div>
     </div>
 
+    {{-- ========================= --}}
+{{-- 🔔 RECENT NOTIFICATIONS --}}
+{{-- ========================= --}}
+<div class="mt-4 p-3 bg-white shadow-sm rounded">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="mb-0">Recent Notifications</h5>
+
+        {{-- ছোট bar/button: গত ৩ দিনের সব নোটিফিকেশন --}}
+        <button class="btn btn-sm btn-outline-secondary"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#last3DaysNotifications"
+                aria-expanded="false"
+                aria-controls="last3DaysNotifications">
+            Notifications (last 3 days: {{ $threeDaysNotifications->count() }})
+        </button>
+    </div>
+
+    @if($recentNotifications->count())
+        @foreach($recentNotifications as $note)
+            <div class="mb-1">
+                <strong>{{ $note->data['ngo_name'] ?? 'NGO' }}</strong>
+                accepted your donation:
+                <span class="text-primary">"{{ $note->data['food_title'] ?? '' }}"</span>
+                <span class="text-muted small">· {{ $note->created_at->diffForHumans() }}</span>
+            </div>
+        @endforeach
+    @else
+        <p class="text-muted mb-0">No notifications yet.</p>
+    @endif
+</div>
+
+ 
+<div class="collapse mt-3" id="last3DaysNotifications">
+    <div class="p-3 bg-white shadow-sm rounded">
+        <h5 class="mb-2">Notifications from Last 3 Days</h5>
+
+        @if($threeDaysNotifications->count())
+            @foreach($threeDaysNotifications as $note)
+                <div class="mb-2 border-bottom pb-1">
+                    <strong>{{ $note->data['ngo_name'] ?? 'NGO' }}</strong>
+                    accepted your donation:
+                    <span class="text-primary">"{{ $note->data['food_title'] ?? '' }}"</span>
+                    <div class="small text-muted">
+                        {{ $note->created_at->diffForHumans() }}
+                    </div>
+                </div>
+            @endforeach
+        @else
+            <p class="text-muted mb-0">No notifications in the last 3 days.</p>
+        @endif
+    </div>
+</div>
+
+
     {{-- ===== SIMPLE DONOR FOOTER ===== --}}
         <footer class="donor-footer text-center py-3 mt-4">
             <div class="container">

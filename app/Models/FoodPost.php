@@ -9,7 +9,7 @@ class FoodPost extends Model
 {
     use HasFactory;
 
-    protected $table = 'food_posts'; // table নাম যদি food_posts হয়
+    protected $table = 'food_posts';
 
     protected $fillable = [
         'user_id',
@@ -28,9 +28,6 @@ class FoodPost extends Model
         'status',
     ];
 
-    /**
-     * গুরুত্বপূর্ণ: date/time ফিল্ডগুলোকে Carbon বানিয়ে দেয়
-     */
     protected $casts = [
         'cooked_at'        => 'datetime',
         'expiry_time'      => 'datetime',
@@ -40,12 +37,13 @@ class FoodPost extends Model
         'updated_at'       => 'datetime',
     ];
 
-    /**
-     * চাইলে relation: একেকটা post এক জন user এর
-     */
-    public function user()
+    public function donor()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function pickupRequest()
+    {
+        return $this->hasOne(PickupRequest::class, 'food_post_id');
     }
 }
-

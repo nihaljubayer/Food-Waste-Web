@@ -129,8 +129,6 @@ Route::middleware('auth')
 
 // ====================== NGO ROUTES ======================
 
-
-
 Route::get('/ngo/dashboard', [NgoController::class, 'index'])
     ->name('ngo.dashboard')
     ->middleware('auth');
@@ -139,25 +137,44 @@ Route::view('/ngo/profile', 'pages.ngos.profile')
     ->name('ngo.profile')
     ->middleware('auth');
 
-// Orders (jodi controller diye set kora thake)
-Route::get('/ngo/orders', [\App\Http\Controllers\NgoOrderController::class, 'index'])
+// Existing: NGO own pickup orders list
+Route::get('/ngo/orders', [NgoOrderController::class, 'index'])
     ->name('ngo.orders')
     ->middleware('auth');
 
-// Settings page dekhano (GET)
+
+// 🔹 NEW: NGO can see all AVAILABLE food posts from donors
+Route::get('/ngo/available-foods', [NgoOrderController::class, 'availableFoods'])
+    ->name('ngo.available_foods')
+    ->middleware('auth');
+
+
+// 🔹 NEW: NGO accepts a specific food post
+Route::post('/ngo/foods/{food}/accept', [NgoOrderController::class, 'accept'])
+    ->name('ngo.food.accept')
+    ->middleware('auth');
+
+// Single food details for NGO
+Route::get('/ngo/foods/{food}', [NgoOrderController::class, 'showFood'])
+    ->name('ngo.food.show')
+    ->middleware('auth');
+
+// Settings page
 Route::view('/ngo/settings', 'pages.ngos.settings')
     ->name('ngo.settings')
     ->middleware('auth');
 
-// Settings form submit (POST)  👈 ei line ta NOTUN
+// Settings form submit
 Route::post('/ngo/settings', [NgoController::class, 'updateSettings'])
     ->name('ngo.settings.update')
     ->middleware('auth');
-// Update order status (PATCH) 👈 ei line ta NOTUN
-    Route::patch('/ngo/orders/{order}/status', [NgoOrderController::class, 'updateStatus'])
+
+// Update order status
+Route::patch('/ngo/orders/{order}/status', [NgoOrderController::class, 'updateStatus'])
     ->name('ngo.orders.updateStatus')
     ->middleware('auth');
-    // ALL NGOs list (view only)
+
+// ALL NGOs list (view only)
 Route::get('/ngo/all-ngos', [NgoController::class, 'allNgos'])
     ->name('ngo.all_ngos')
     ->middleware('auth');

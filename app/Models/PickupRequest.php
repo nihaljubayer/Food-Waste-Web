@@ -20,13 +20,25 @@ class PickupRequest extends Model
         'pickup_time' => 'datetime',
     ];
 
+    // OLD: NGO from ngo table (optional)
     public function ngo()
     {
-        return $this->belongsTo(Ngo::class);
+        return $this->belongsTo(Ngo::class, 'ngo_id');
+    }
+
+    // NEW: NGO user account (recommended for dashboard)
+    public function ngoUser()
+    {
+        return $this->belongsTo(User::class, 'ngo_id');
     }
 
     public function donor()
     {
         return $this->belongsTo(User::class, 'donor_id');
+    }
+
+    public function foodPost()
+    {
+        return $this->belongsTo(FoodPost::class, 'food_post_id');
     }
 }

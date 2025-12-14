@@ -109,173 +109,209 @@
     }
 </style>
 
-
 <div class="container py-4 py-md-5">
 
     {{-- Top hero --}}
-
     <div class="admin-hero mb-4 mb-md-5">
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
-        <div class="mb-3 mb-md-0">
-            <div class="badge-role mb-2">
-                <i class="bi bi-shield-lock-fill me-1"></i> System Admin Panel
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+            <div class="mb-3 mb-md-0">
+                <div class="badge-role mb-2">
+                    <i class="bi bi-shield-lock-fill me-1"></i> System Admin Panel
+                </div>
+
+                <h2 class="mb-1">Welcome back, Admin</h2>
+
+                {{-- dynamic greeting --}}
+                <p id="admin-greeting" class="mt-1 fw-bold" style="font-size: 1.1rem;"></p>
+
+                <p class="mb-0">
+                    Monitor donors, organizations and food donations from a single,
+                    intelligent dashboard. This panel is designed for reporting and AI-based insights.
+                </p>
             </div>
 
-            <h2 class="mb-1">Welcome back, Admin</h2>
+            <div class="text-md-end">
+                <div class="pill mb-1">
+                    <span></span> Live system status: Online
+                </div>
 
-            <!-- ⭐ ADD THIS GREETING LINE -->
-            <p id="admin-greeting" class="mt-1 fw-bold" style="font-size: 1.1rem;"></p>
-
-            <p class="mb-0">
-                Monitor donors, organizations and food donations from a single,
-                intelligent dashboard. This panel is designed for reporting and AI-based insights.
-            </p>
-        </div>
-        
-        <div class="text-md-end">
-            <div class="pill mb-1">
-                <span></span> Live system status: Online
+                {{-- live clock --}}
+                <p id="live-clock" class="mb-0 small fw-bold"></p>
             </div>
-
-            <!-- ⭐ CLOCK -->
-            <p id="live-clock" class="mb-0 small fw-bold"></p>
         </div>
     </div>
-</div>
 
-<script>
-    function updateClock() {
-        const now = new Date();
-        const options = {
-            timeZone: "Asia/Dhaka",
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: true
-        };
-        const formatter = new Intl.DateTimeFormat('en-US', options);
-        document.getElementById('live-clock').innerText = formatter.format(now);
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    function updateGreeting() {
-        const now = new Date();
-        const hour = now.getHours();
-        let greeting = "";
-
-        if (hour >= 5 && hour < 12) {
-            greeting = "Good Morning ☀️";
-        } else if (hour >= 12 && hour < 17) {
-            greeting = "Good Afternoon 🌤";
-        } else if (hour >= 17 && hour < 21) {
-            greeting = "Good Evening 🌆";
-        } else {
-            greeting = "Good Night🌙";
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const options = {
+                timeZone: "Asia/Dhaka",
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: true
+            };
+            const formatter = new Intl.DateTimeFormat('en-US', options);
+            document.getElementById('live-clock').innerText = formatter.format(now);
         }
+        setInterval(updateClock, 1000);
+        updateClock();
 
-        document.getElementById('admin-greeting').innerText = greeting;
-    }
-    updateGreeting();
-</script>
+        function updateGreeting() {
+            const now = new Date();
+            const hour = now.getHours();
+            let greeting = "";
+
+            if (hour >= 5 && hour < 12) {
+                greeting = "Good Morning ☀️";
+            } else if (hour >= 12 && hour < 17) {
+                greeting = "Good Afternoon 🌤";
+            } else if (hour >= 17 && hour < 21) {
+                greeting = "Good Evening 🌆";
+            } else {
+                greeting = "Good Night🌙";
+            }
+
+            document.getElementById('admin-greeting').innerText = greeting;
+        }
+        updateGreeting();
+    </script>
 
     {{-- Stats row --}}
     <div class="row g-3 mb-4">
+
+        {{-- Total users --}}
         <div class="col-md-4">
             <div class="card stat-card h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <div>
                             <div class="stat-label">Total Users</div>
-                            <div class="stat-value">—</div>
+                            <div class="stat-value">
+                                {{ $totalUsers ?? 0 }}
+                            </div>
                         </div>
                         <div class="rounded-circle d-flex align-items-center justify-content-center"
                              style="width:40px;height:40px;background:#eef2ff;">
                             <i class="bi bi-people-fill text-primary"></i>
                         </div>
                     </div>
+
                     <div class="trend-up">
-                        +0% &middot; last 7 days
+                        +0% · last 7 days
                     </div>
+
                     <p class="small text-muted mb-0">
-                        Includes donors, organizations and admins.
+                        Donors: {{ $totalDonors ?? 0 }},
+                        NGOs: {{ $totalNgos ?? 0 }},
+                        Admins: {{ $totalAdmins ?? 0 }}
                     </p>
                 </div>
             </div>
         </div>
 
+        {{-- Total donations (accepted + completed pickups) --}}
         <div class="col-md-4">
             <div class="card stat-card h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <div>
                             <div class="stat-label">Total Donations</div>
-                            <div class="stat-value">—</div>
+
+                            <div class="stat-value">
+                                {{ $totalDonations ?? 0 }}
+                            </div>
                         </div>
+
                         <div class="rounded-circle d-flex align-items-center justify-content-center"
                              style="width:40px;height:40px;background:#ecfdf3;">
                             <i class="bi bi-basket-fill text-success"></i>
                         </div>
                     </div>
+
                     <div class="trend-up">
-                        +0 &middot; this week
+                        +{{ $donationsThisWeek ?? 0 }} · this week
                     </div>
+
                     <p class="small text-muted mb-0">
-                        Completed food pickups recorded in the system.
+                        Food pickup requests that have been <strong>accepted by NGOs
+                        or completed</strong>.
                     </p>
                 </div>
             </div>
         </div>
 
+        {{-- Open requests (available donor posts) --}}
         <div class="col-md-4">
             <div class="card stat-card h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <div>
                             <div class="stat-label">Open Requests</div>
-                            <div class="stat-value">—</div>
+
+                            {{-- donor posted but no NGO yet --}}
+                            <div class="stat-value">
+                                {{ $openRequests ?? 0 }}
+                            </div>
                         </div>
+
                         <div class="rounded-circle d-flex align-items-center justify-content-center"
-                             style="width:40px;height:40px;background:#fee2e2;">
-                            <i class="bi bi-bell-fill text-danger"></i>
+                             style="width:40px;height:40px;background:#fef2f2;">
+                            <i class="bi bi-exclamation-triangle-fill text-danger"></i>
                         </div>
                     </div>
-                    <div class="trend-down">
-                        0 pending approvals
+
+                    <div class="text-danger small mb-1">
+                        {{ $pendingApprovals ?? 0 }} donor posts waiting for NGOs
                     </div>
+
                     <p class="small text-muted mb-0">
-                        NGO requests that are still waiting for donor confirmation.
+                        Donor food donations that are still unassigned to any NGO.
                     </p>
                 </div>
             </div>
         </div>
+
     </div>
 
     {{-- AI + Recent activity --}}
     <div class="row g-3">
         <div class="col-lg-5">
-            <div class="card ai-card h-100">
-                <div class="card-body position-relative">
-                    <div class="ai-tag mb-2">
-                        <i class="bi bi-cpu me-1"></i> AI Insights (demo text)
-                    </div>
-                    <h5 class="mb-3">How your platform is performing</h5>
-                    <p class="mb-2">
-                        <span class="ai-highlight">This section will show AI-generated summaries</span> 
-                        such as peak donation times, most active locations and recommended areas
-                        to onboard new NGOs.
-                    </p>
-                    <p class="mb-0 small text-muted">
-                        In the final version the AI service will analyse real data from
-                        <strong>food posts</strong> and <strong>pickup requests</strong>
-                        to help you make decisions quickly.
-                    </p>
-                </div>
+        <div class="card ai-card h-100">
+        <div class="card-body position-relative">
+            <div class="ai-tag mb-2">
+                <i class="bi bi-cpu me-1"></i> AI Insights
             </div>
+            <h5 class="mb-3">How your platform is performing</h5>
+
+            <p class="mb-2">
+                <span class="ai-highlight">
+                    {{ $foodPostsLast7d ?? 0 }} new food posts in the last 7 days
+                </span>
+                and {{ $totalDonations ?? 0 }} donations have been accepted or completed so far.
+            </p>
+
+            @if(!empty($aiSummaryLines))
+                <ul class="mb-2 ps-3">
+                    @foreach($aiSummaryLines as $line)
+                        <li class="small">{{ $line }}</li>
+                    @endforeach
+                </ul>
+            @endif
+
+            <p class="mb-0 small text-muted">
+                These insights are generated from your current
+                <strong>food posts</strong> and <strong>pickup requests</strong>.
+                Later you can plug in a real AI service for deeper analysis.
+            </p>
         </div>
+        </div>
+        </div>
+
+
 
         <div class="col-lg-7">
             <div class="card h-100 shadow-sm" style="border-radius:16px;">
@@ -283,7 +319,7 @@
                      style="border-top-left-radius:16px;border-top-right-radius:16px;">
                     <div>
                         <h6 class="mb-0">Recent activity</h6>
-                        <small class="text-muted">Sample layout for future donation & user logs</small>
+                        <small class="text-muted">Sample layout for future donation &amp; user logs</small>
                     </div>
                     <span class="badge bg-light text-secondary">
                         <i class="bi bi-clock-history me-1"></i>Last 24 hours
@@ -300,26 +336,64 @@
                                 <th>Status</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td>—</td>
-                                <td><span class="badge bg-soft-primary text-primary">Donation</span></td>
-                                <td class="text-muted">Sample donor</td>
-                                <td><span class="badge bg-secondary-subtle text-secondary">Waiting</span></td>
-                            </tr>
-                            <tr>
-                                <td>—</td>
-                                <td><span class="badge bg-soft-success text-success">Pickup</span></td>
-                                <td class="text-muted">Sample NGO</td>
-                                <td><span class="badge bg-success-subtle text-success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>—</td>
-                                <td><span class="badge bg-soft-danger text-danger">Alert</span></td>
-                                <td class="text-muted">System</td>
-                                <td><span class="badge bg-danger-subtle text-danger">Review</span></td>
-                            </tr>
-                            </tbody>
+    <tbody>
+     @forelse($recentActivities as $activity)
+    <tr>
+        {{-- Time --}}
+        <td class="text-muted">
+            {{ $activity->created_at->format('M d, H:i') }}
+        </td>
+
+        {{-- Type --}}
+        <td>
+            @if($activity->status === 'pending')
+                <span class="badge bg-soft-secondary text-secondary">Request Pending</span>
+            @elseif($activity->status === 'accepted')
+                <span class="badge bg-soft-primary text-primary">Pickup Accepted</span>
+            @elseif($activity->status === 'completed')
+                <span class="badge bg-soft-success text-success">Pickup Completed</span>
+            @else
+                <span class="badge bg-soft-danger text-danger">{{ ucfirst($activity->status) }}</span>
+            @endif
+        </td>
+
+        {{-- User (NGO or Donor) --}}
+        <td class="text-muted">
+        @if($activity->ngoUser)
+             {{ $activity->ngoUser->name }}
+        @elseif($activity->donor)
+             {{ $activity->donor->name }}
+        @else
+             System
+        @endif
+
+        </td>
+
+        {{-- Status Badge --}}
+        <td>
+            @if($activity->status === 'pending')
+                <span class="badge bg-secondary-subtle text-secondary">Pending</span>
+
+            @elseif($activity->status === 'accepted')
+                <span class="badge bg-primary-subtle text-primary">Accepted</span>
+
+            @elseif($activity->status === 'completed')
+                <span class="badge bg-success-subtle text-success">Completed</span>
+
+            @else
+                <span class="badge bg-danger-subtle text-danger">{{ ucfirst($activity->status) }}</span>
+            @endif
+        </td>
+    </tr>
+    @empty
+    <tr>
+        <td colspan="4" class="text-muted small">
+            No recent activity yet.
+        </td>
+    </tr>
+    @endforelse
+    </tbody>
+
                         </table>
                     </div>
                     <p class="small text-muted mt-2 mb-0">

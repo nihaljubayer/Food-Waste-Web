@@ -240,18 +240,7 @@
 <section class="stats-band py-4">
     <div class="container">
         <div class="row text-center text-md-start g-4 align-items-center">
-            <div class="col-md-4">
-                <div class="stats-number">500+</div>
-                <div class="stats-label">MEALS SAVED FROM WASTE</div>
-            </div>
-            <div class="col-md-4">
-                <div class="stats-number">40+</div>
-                <div class="stats-label">REGISTERED DONORS</div>
-            </div>
-            <div class="col-md-4">
-                <div class="stats-number">15+</div>
-                <div class="stats-label">PARTNER NGOS</div>
-            </div>
+            
         </div>
     </div>
 </section>
