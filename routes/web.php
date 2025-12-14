@@ -5,13 +5,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Donor\DashboardController as DonorDashboardController;
 use App\Http\Controllers\Donor\FoodPostController;
-use App\Http\Controllers\Donor\PickupController;      
+use App\Http\Controllers\Donor\PickupController;
 use App\Http\Controllers\Donor\ProfileController;
+use App\Http\Controllers\Donor\NgoBrowseController;
 use App\Http\Controllers\NgoController;
 use App\Http\Controllers\NgoOrderController;
-<<<<<<< HEAuse App\Http\Controllers\Donor\ProfileController;
-use App\Http\Controllers\Donor\NgoBrowseController;
-
 
 
 // ====================== PUBLIC ROUTES ======================
