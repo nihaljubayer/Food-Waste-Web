@@ -138,7 +138,7 @@ Route::view('/ngo/profile', 'pages.ngos.profile')
     ->middleware('auth');
 
 // Orders (jodi controller diye set kora thake)
-Route::get('/ngo/orders', [\\App\\Http\\Controllers\\NgoOrderController::class, 'index'])
+Route::get('/ngo/orders', [\App\Http\Controllers\NgoOrderController::class, 'index'])
     ->name('ngo.orders')
     ->middleware('auth');
 
