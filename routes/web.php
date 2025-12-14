@@ -5,11 +5,16 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Donor\DashboardController as DonorDashboardController;
 use App\Http\Controllers\Donor\FoodPostController;
+use App\Http\Controllers\Donor\PickupController;      
+use App\Http\Controllers\Donor\ProfileController;
 use App\Http\Controllers\NgoController;
 use App\Http\Controllers\NgoOrderController;
+<<<<<<< HEAD
+=======
 use App\Http\Controllers\Donor\ProfileController;
 use App\Http\Controllers\Donor\NgoBrowseController;
 
+>>>>>>> 33bb216f99421c32df822e52964e90e2ef9cc8ad
 
 
 // ====================== PUBLIC ROUTES ======================
@@ -58,6 +63,7 @@ Route::middleware('auth')
 
 
 // ====================== DONOR ROUTES ======================
+
 Route::middleware('auth')
     ->prefix('donor')
     ->name('donor.')
@@ -82,7 +88,7 @@ Route::middleware('auth')
         Route::get('/food/{post}', [FoodPostController::class, 'show'])
             ->name('food.show');
 
-        // NEW: update status (Available / Completed / Cancelled ...)
+        // Update status (Available / Completed / Cancelled ...)
         Route::patch('/food/{post}/status', [FoodPostController::class, 'updateStatus'])
             ->name('food.updateStatus');
 
@@ -98,7 +104,7 @@ Route::middleware('auth')
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
- 
+
         Route::get('/profile/password', [ProfileController::class, 'passwordForm'])->name('profile.password');
         Route::post('/profile/password/update', [ProfileController::class, 'updatePassword'])
             ->name('profile.password.update');
@@ -109,22 +115,20 @@ Route::middleware('auth')
 
 
 
+        // ================== PICKUP MODULE (BACKEND) ==================
 
-
-
-        // ================== PICKUP MODULE (FRONTEND ONLY) ==================
-        // Your actual view path: resources/views/pages/donor/pickups/create.blade.php
-        Route::view('/pickups/create', 'pages.donor.pickups.create')
+        // Show pickup form  → GET /donor/pickups/create
+        Route::get('/pickups/create', [PickupController::class, 'create'])
             ->name('pickups.create');
 
-        // Your actual view path: resources/views/pages/donor/pickups/index.blade.php
-        Route::view('/pickups', 'pages.donor.pickups.index')
+        // Store pickup form → POST /donor/pickups
+        Route::post('/pickups', [PickupController::class, 'store'])
+            ->name('pickups.store');
+
+        // List pickups      → GET /donor/pickups
+        Route::get('/pickups', [PickupController::class, 'index'])
             ->name('pickups.index');
     });
-
-
-
-
 
 
 // ====================== NGO ROUTES ======================
@@ -137,54 +141,38 @@ Route::view('/ngo/profile', 'pages.ngos.profile')
     ->name('ngo.profile')
     ->middleware('auth');
 
-// Existing: NGO own pickup orders list
-Route::get('/ngo/orders', [NgoOrderController::class, 'index'])
+// Orders (jodi controller diye set kora thake)
+Route::get('/ngo/orders', [\App\Http\Controllers\NgoOrderController::class, 'index'])
     ->name('ngo.orders')
     ->middleware('auth');
 
-
-// 🔹 NEW: NGO can see all AVAILABLE food posts from donors
-Route::get('/ngo/available-foods', [NgoOrderController::class, 'availableFoods'])
-    ->name('ngo.available_foods')
-    ->middleware('auth');
-
-
-// 🔹 NEW: NGO accepts a specific food post
-Route::post('/ngo/foods/{food}/accept', [NgoOrderController::class, 'accept'])
-    ->name('ngo.food.accept')
-    ->middleware('auth');
-
-// Single food details for NGO
-Route::get('/ngo/foods/{food}', [NgoOrderController::class, 'showFood'])
-    ->name('ngo.food.show')
-    ->middleware('auth');
-
-// Settings page
+// Settings page dekhano (GET)
 Route::view('/ngo/settings', 'pages.ngos.settings')
     ->name('ngo.settings')
     ->middleware('auth');
 
-// Settings form submit
+// Settings form submit (POST)  👈 ei line ta NOTUN
 Route::post('/ngo/settings', [NgoController::class, 'updateSettings'])
     ->name('ngo.settings.update')
     ->middleware('auth');
-
-// Update order status
-Route::patch('/ngo/orders/{order}/status', [NgoOrderController::class, 'updateStatus'])
+// Update order status (PATCH) 👈 ei line ta NOTUN
+    Route::patch('/ngo/orders/{order}/status', [NgoOrderController::class, 'updateStatus'])
     ->name('ngo.orders.updateStatus')
     ->middleware('auth');
-
-// ALL NGOs list (view only)
+    // ALL NGOs list (view only)
 Route::get('/ngo/all-ngos', [NgoController::class, 'allNgos'])
     ->name('ngo.all_ngos')
     ->middleware('auth');
 
-// Donors list (view only)
+// Donors list
 Route::get('/ngo/donors', [NgoController::class, 'donors'])
     ->name('ngo.donors')
     ->middleware('auth');
+<<<<<<< HEAD
+=======
 
 
 
 
 
+>>>>>>> 33bb216f99421c32df822e52964e90e2ef9cc8ad
